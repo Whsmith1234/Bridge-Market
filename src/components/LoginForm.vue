@@ -19,7 +19,6 @@
 
       <slot name="append-outer" />
     </v-layout>
-
     <v-layout
       row
       wrap
@@ -113,3 +112,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.login{
+  width:50% !important;
+}
+</style>

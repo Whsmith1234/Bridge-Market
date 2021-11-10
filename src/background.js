@@ -33,7 +33,7 @@ function createWindow () {
     win = null
   })
   const template = [{
-    label: 'ADAMANT Messenger',
+    label: 'Bridge Market',
     submenu: [
       { label: 'About', selector: 'orderFrontStandardAboutPanel:' },
       { type: 'separator' },

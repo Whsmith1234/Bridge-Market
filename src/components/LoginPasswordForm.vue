@@ -115,3 +115,9 @@ export default {
   }
 }
 </script>
+<style>
+.login-form{
+  width:75%;
+  margin-left:12.5%;
+}
+</style>

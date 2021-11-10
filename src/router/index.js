@@ -16,7 +16,8 @@ import Votes from '@/views/Votes'
 import Nodes from '@/views/Nodes'
 import Login from '@/views/Login'
 import ExportKeys from '@/views/ExportKeys'
-
+import Available from '@/views/Available'
+import NFT from '@/views/Nft'
 Vue.use(Router)
 
 const router = new Router({
@@ -106,6 +107,38 @@ const router = new Router({
       props: true,
       name: 'Chats',
       component: Chats,
+      meta: {
+        requiresAuth: true,
+        layout: 'toolbar',
+        containerNoPadding: true,
+        showNavigation: true,
+        scrollPosition: {
+          x: 0,
+          y: 0
+        }
+      }
+    },
+    {
+      path: '/available',
+      props: true,
+      name: 'Available',
+      component: Available,
+      meta: {
+        requiresAuth: true,
+        layout: 'toolbar',
+        containerNoPadding: true,
+        showNavigation: true,
+        scrollPosition: {
+          x: 0,
+          y: 0
+        }
+      }
+    },
+    {
+      path: '/asset',
+      props: true,
+      name: 'NFT',
+      component: NFT,
       meta: {
         requiresAuth: true,
         layout: 'toolbar',

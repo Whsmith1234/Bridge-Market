@@ -1,6 +1,5 @@
 <template>
   <v-bottom-nav
-    :active.sync="currentPageIndex"
     :value="showNav"
     app
     height="50"
@@ -42,16 +41,26 @@
             </v-badge>
           </v-btn>
 
-          <!-- Settings -->
           <v-btn
             to="/options"
             flat
           >
-            <span>{{ $t('bottom.settings_button') }}</span>
+            <span>{{ 'Settings' }}</span>
             <v-icon size="20">
               mdi-cog
             </v-icon>
           </v-btn>
+          <!-- Settings -->
+          <v-btn
+            to="/available"
+            flat
+          >
+            <span>{{ 'Market' }}</span>
+            <v-icon size="20">
+              mdi-layers-outline
+            </v-icon>
+          </v-btn>
+
         </v-layout>
       </container>
     </v-layout>
@@ -71,6 +80,11 @@ export default {
         title: 'chats',
         link: '/chats',
         icon: 'mdi-forum'
+      },
+      {
+        title: 'Market',
+        link: '/available',
+        icon: 'mdi-layers-outline'
       },
       {
         title: 'settings',

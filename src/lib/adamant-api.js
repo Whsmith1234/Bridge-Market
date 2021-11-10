@@ -224,7 +224,7 @@ function tryDecodeStoredValue (value) {
  * @param {number} records if > 1, returns array of KVS transactions
  * @returns {Promise<any>}
  */
-export function getStored (key, ownerAddress, records = 1) {
+export function getStored (key, ownerAddress, records = 1, offset = 0) {
   if (!ownerAddress) {
     ownerAddress = myAddress
   }
@@ -233,7 +233,34 @@ export function getStored (key, ownerAddress, records = 1) {
     senderId: ownerAddress,
     key,
     orderBy: 'timestamp:desc',
-    limit: records
+    limit: records,
+    offset: offset
+  }
+
+  return client.get('/api/states/get', params).then(response => {
+    let value = null
+
+    if (response.success && Array.isArray(response.transactions)) {
+      if (records > 1) {
+        // Return all records
+        // It may be an empty array; f. e., in case of no crypto addresses stored for a currency
+        return response.transactions
+      } else {
+        const tx = response.transactions[0]
+        value = tx && tx.asset && tx.asset.state && tx.asset.state.value
+        return tryDecodeStoredValue(value)
+      }
+    }
+
+    return null
+  })
+}
+export function getStoredArray (key, records = 1, timestamp = 'desc', offset = 0) {
+  const params = {
+    key,
+    orderBy: 'timestamp:' + timestamp,
+    limit: records,
+    offset: offset
   }
 
   return client.get('/api/states/get', params).then(response => {

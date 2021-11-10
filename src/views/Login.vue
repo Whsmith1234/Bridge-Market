@@ -25,13 +25,13 @@
         <logo style="width: 300px;" />
 
         <h1 :class="`${className}__title`">
-          {{ $t('login.brand_title') }}
+          {{ 'Bridge Market' }}
         </h1>
         <h2
           :class="`${className}__subtitle`"
           class="hidden-sm-and-down mt-3"
         >
-          {{ $t('login.subheader') }}
+          {{ 'Built with Adamant Messenger' }}
         </h2>
       </v-card>
 
@@ -224,8 +224,8 @@ export default {
   &__title
     font-family: 'Exo 2'
     font-weight: 100
-    font-size: 40px
-    line-height: 40px
+    font-size: 30px
+    line-height: 30px
     text-transform: uppercase
   &__subtitle
     font-family: 'Exo 2'

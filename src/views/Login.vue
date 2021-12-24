@@ -1,37 +1,20 @@
 <template>
-  <v-layout
-    row
-    fill-height
-    justify-center
-    :class="className"
-  >
+  <v-layout row fill-height justify-center :class="className">
     <container>
       <div class="text-xs-right">
         <language-switcher>
-          <v-icon
-            slot="prepend"
-            size="18"
-          >
-            mdi-chevron-right
-          </v-icon>
+          <v-icon slot="prepend" size="18"> mdi-chevron-right </v-icon>
         </language-switcher>
       </div>
 
-      <v-card
-        flat
-        color="transparent"
-        class="text-xs-center mt-3"
-      >
-        <logo style="width: 300px;" />
+      <v-card flat color="transparent" class="text-xs-center mt-3">
+        <logo style="width: 300px" />
 
         <h1 :class="`${className}__title`">
-          {{ 'Bridge Market' }}
+          {{ "Bridge Market" }}
         </h1>
-        <h2
-          :class="`${className}__subtitle`"
-          class="hidden-sm-and-down mt-3"
-        >
-          {{ 'Built with Adamant Messenger' }}
+        <h2 :class="`${className}__subtitle`" class="hidden-sm-and-down mt-3">
+          {{ "Built with Adamant Messenger" }}
         </h2>
       </v-card>
 
@@ -42,12 +25,7 @@
         class="text-xs-center mt-3"
       >
         <v-layout justify-center>
-          <v-flex
-            xs12
-            sm8
-            md8
-            lg8
-          >
+          <v-flex xs12 sm8 md8 lg8>
             <login-form
               ref="loginForm"
               v-model="passphrase"
@@ -57,10 +35,7 @@
           </v-flex>
         </v-layout>
 
-        <v-layout
-          justify-center
-          class="mt-2"
-        >
+        <v-layout justify-center class="mt-2">
           <v-btn
             :title="$t('login.scan_qr_code_button_tooltip')"
             icon
@@ -71,10 +46,7 @@
             <icon><qr-code-scan-icon /></icon>
           </v-btn>
 
-          <qrcode-capture
-            @detect="onDetectQrcode"
-            @error="onDetectQrcodeError"
-          >
+          <qrcode-capture @detect="onDetectQrcode" @error="onDetectQrcodeError">
             <v-btn
               :title="$t('login.login_by_qr_code_tooltip')"
               icon
@@ -87,20 +59,9 @@
         </v-layout>
       </v-card>
 
-      <v-layout
-        v-if="!isLoginViaPassword"
-        justify-center
-        class="mt-5"
-      >
-        <v-flex
-          xs12
-          sm8
-          md8
-          lg8
-        >
-          <passphrase-generator
-            @copy="onCopyPassphrase"
-          />
+      <v-layout v-if="!isLoginViaPassword" justify-center class="mt-5">
+        <v-flex xs12 sm8 md8 lg8>
+          <passphrase-generator @copy="onCopyPassphrase" />
         </v-flex>
       </v-layout>
 
@@ -111,12 +72,7 @@
         class="text-xs-center mt-3"
       >
         <v-layout justify-center>
-          <v-flex
-            xs12
-            sm8
-            md8
-            lg8
-          >
+          <v-flex xs12 sm8 md8 lg8>
             <login-password-form
               v-model="password"
               @login="onLogin"
@@ -136,17 +92,17 @@
 </template>
 
 <script>
-import QrcodeCapture from '@/components/QrcodeCapture'
-import LanguageSwitcher from '@/components/LanguageSwitcher'
-import PassphraseGenerator from '@/components/PassphraseGenerator'
-import LoginForm from '@/components/LoginForm'
-import QrcodeScannerDialog from '@/components/QrcodeScannerDialog'
-import Icon from '@/components/icons/BaseIcon'
-import QrCodeScanIcon from '@/components/icons/common/QrCodeScan'
-import FileIcon from '@/components/icons/common/File'
-import LoginPasswordForm from '@/components/LoginPasswordForm'
-import Logo from '@/components/icons/common/Logo'
-import { navigateByURI } from '@/router/navigationGuard'
+import QrcodeCapture from "@/components/QrcodeCapture";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import PassphraseGenerator from "@/components/PassphraseGenerator";
+import LoginForm from "@/components/LoginForm";
+import QrcodeScannerDialog from "@/components/QrcodeScannerDialog";
+import Icon from "@/components/icons/BaseIcon";
+import QrCodeScanIcon from "@/components/icons/common/QrCodeScan";
+import FileIcon from "@/components/icons/common/File";
+import LoginPasswordForm from "@/components/LoginPasswordForm";
+import Logo from "@/components/icons/common/Logo";
+import { navigateByURI } from "@/router/navigationGuard";
 
 export default {
   components: {
@@ -159,89 +115,102 @@ export default {
     QrCodeScanIcon,
     FileIcon,
     LoginPasswordForm,
-    Logo
+    Logo,
   },
   data: () => ({
-    passphrase: '',
-    password: '',
+    passphrase: "",
+    password: "",
     showQrcodeScanner: false,
-    logo: '/img/adamant-logo-transparent-512x512.png'
+    logo: "/img/adamant-logo-transparent-512x512.png",
   }),
   computed: {
-    className () {
-      return 'login-page'
+    className() {
+      return "login-page";
     },
-    isLoginViaPassword () {
-      return this.$store.getters['options/isLoginViaPassword']
-    }
+    isLoginViaPassword() {
+      return this.$store.getters["options/isLoginViaPassword"];
+    },
   },
   methods: {
-    onDetectQrcode (passphrase) {
-      this.onScanQrcode(passphrase)
+    onDetectQrcode(passphrase) {
+      this.onScanQrcode(passphrase);
     },
-    onDetectQrcodeError (err) {
-      this.passphrase = ''
-      this.$store.dispatch('snackbar/show', {
-        message: this.$t('login.invalid_qr_code')
-      })
-      console.warn(err)
+    onDetectQrcodeError(err) {
+      this.passphrase = "";
+      this.$store.dispatch("snackbar/show", {
+        message: this.$t("login.invalid_qr_code"),
+      });
+      console.warn(err);
     },
-    onLogin () {
+    onLogin() {
       if (!this.$store.state.chat.isFulfilled) {
-        this.$store.commit('chat/createAdamantChats')
-        this.$store.dispatch('chat/loadChats')
-          .then(() => this.$store.dispatch('startInterval'))
+        this.$store.commit("chat/createAdamantChats");
+        this.$store
+          .dispatch("chat/loadChats")
+          .then(() => this.$store.dispatch("startInterval"));
       } else {
-        this.$store.dispatch('startInterval')
+        this.$store.dispatch("startInterval");
       }
 
-      navigateByURI()
+      navigateByURI();
     },
-    onLoginError (key) {
-      this.$store.dispatch('snackbar/show', {
-        message: this.$t(key)
-      })
+    onLoginError(key) {
+      this.$store.dispatch("snackbar/show", {
+        message: this.$t(key),
+      });
     },
-    onCopyPassphrase () {
-      this.$store.dispatch('snackbar/show', {
-        message: this.$t('home.copied'),
-        timeout: 2000
-      })
+    onCopyPassphrase() {
+      this.$store.dispatch("snackbar/show", {
+        message: this.$t("home.copied"),
+        timeout: 2000,
+      });
     },
-    onScanQrcode (passphrase) {
-      this.passphrase = passphrase
-      this.$nextTick(() => this.$refs.loginForm.submit())
-    }
-  }
-}
+    onScanQrcode(passphrase) {
+      this.passphrase = passphrase;
+      this.$nextTick(() => this.$refs.loginForm.submit());
+    },
+  },
+};
 </script>
 
 <style lang="stylus" scoped>
-@import '~vuetify/src/stylus/settings/_variables.styl'
-@import '../assets/stylus/settings/_colors.styl'
+@import '~vuetify/src/stylus/settings/_variables.styl';
+@import '../assets/stylus/settings/_colors.styl';
 
-.login-page
-  &__title
-    font-family: 'Exo 2'
-    font-weight: 100
-    font-size: 30px
-    line-height: 30px
-    text-transform: uppercase
-  &__subtitle
-    font-family: 'Exo 2'
-    font-weight: 100
-    font-size: 18px
-  &__icon
-    transition: 0.2s linear
+.login-page {
+  &__title {
+    font-family: 'Exo 2';
+    font-weight: 100;
+    font-size: 30px;
+    line-height: 30px;
+    text-transform: uppercase;
+  }
 
-/** Themes **/
-.theme--light
-  .login-page
-    &__icon, &__title, &__subtitle
-      color: $adm-colors.regular
+  &__subtitle {
+    font-family: 'Exo 2';
+    font-weight: 100;
+    font-size: 18px;
+  }
 
-.theme--dark
-  .login-page
-    &__icon
-      color: $shades.white
+  &__icon {
+    transition: 0.2s linear;
+  }
+}
+
+/* * Themes * */
+.theme--light {
+  .login-page {
+    &__icon, &__title, &__subtitle {
+      color: $adm-colors.regular;
+    }
+  }
+}
+
+.theme--dark {
+  .login-page {
+    &__icon {
+      color: $shades.white;
+    }
+  }
+}
 </style>

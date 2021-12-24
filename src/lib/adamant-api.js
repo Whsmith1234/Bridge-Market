@@ -1,6 +1,6 @@
 import Queue from 'promise-queue'
 import { Base64 } from 'js-base64'
-
+import { hexToBytes, bytesToHex } from './hex'
 import { Transactions, Delegates } from './constants'
 import utils from './adamant'
 import client from './adamant-api-client'
@@ -167,7 +167,33 @@ export function sendMessage (params) {
       return reason
     })
 }
+export function sendMessageB (params) {
+  return getPublicKey(params.to)
+    .then(publicKey => {
+      const text = typeof params.message === 'string'
+        ? params.message
+        : JSON.stringify(params.message)
+       var enc = new TextEncoder(); // always utf-8
+       console.log(enc.encode(text));
+       console.log();
+      const chat = {
+        message: bytesToHex(enc.encode(text)),
+        own_message: "",
+        type: params.type || 1
+      }
+      
+      const transaction = newTransaction(Transactions.CHAT_MESSAGE)
+      transaction.amount = params.amount ? utils.prepareAmount(params.amount) : 0
+      transaction.asset = { chat }
+      transaction.recipientId = params.to
 
+      return client.post('/api/chats/process', (endpoint) => {
+        return { transaction: signTransaction(transaction, endpoint.timeDelta) }
+      })
+    }).catch(reason => {
+      return reason
+    })
+}
 /**
  * Sends special message with the specified payload
  * @param {string} to recipient address

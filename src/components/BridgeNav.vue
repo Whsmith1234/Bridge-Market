@@ -2,7 +2,7 @@
     <div class="layout justify-center">
       <div id="modal-example" uk-modal="" class="uk-modal" style="" tabindex="0">
         <div class="uk-modal-dialog uk-modal-body">
-          <h2 class="uk-modal-title">SelfMade NFTs</h2>
+          <h2 class="uk-modal-title">BridgeMarket NFTs</h2>
           <p>Hello! Bridge Market is a new kind of NFT Market which allows you to buy and sell NFTs across multiple crypto-currencies. The protocol we have in place is completely decentralized and can be built on top of using an api coming out soon. The interface we have abstracts away the mess to give you a clean experience.</p>
           <p>We hope you enjoy.</p>
           <p>Bridge Market</p>
@@ -65,17 +65,25 @@
           </form>
         </div>
       </div>
-      <nav id="nav" class="uk-navbar uk-navbar-container" uk-navbar="">
+      <nav id="nav" class="uk-navbar uk-navbar-container" style="min-height:80px" uk-navbar="">
         <div class="uk-navbar-left">
           <ul class="uk-navbar-nav">
             <li>
-              <a uk-navbar-toggle-icon="" href="#" class="uk-icon uk-navbar-toggle-icon" aria-expanded="false"></a>
-              <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="left: 0px; top: 80px">
+
+              <a href="#" style ="color:black; padding-right:0px;" class="uk-icon uk-navbar-toggle-icon" aria-expanded="false"> <v-icon size="20">
+              mdi-menu
+            </v-icon></a>
+              <div class="uk-navbar-dropdown uk-navbar-dropdown-bottom-left" style="left: 10px; top: 80px">
                 <ul class="uk-nav uk-navbar-dropdown-nav">
                   <li class="uk-active">
-                    <button class="uk-button uk-button-text" type="button" uk-toggle="target: #modal-example" aria-expanded="false">
-                      About Bridge Market
-                    </button>
+                     <router-link
+                    :to="{
+                      path: '/about'
+                    }"
+                  aria-expanded="false">
+                  <button  class="uk-button uk-button-text" type="button" >About Bridge Market</button>
+                      
+                    </router-link>
                   </li>
                   <li class="uk-nav-header">Actions</li>
                   <li>
@@ -93,18 +101,25 @@
                       Transfer your NFT
                     </a>
                   </li>
-                  <li class="uk-nav-header">Contact Us</li>
-                  <li><a href="mailto: wpra@protonmail.com">Email</a></li>
-                  <li><a href="sms:+19059738035">Phone</a></li>
-                  <li><a href="/?address=U14092964812210410953&label=Bridge">Message Us</a></li>
                 </ul>
-              </div>
-            </li>
-            <li><a href="#">Bridge Market</a></li>
+                </div>
+                </li>
+            <li><router-link to="/">Bridge Market</router-link></li>
           </ul>
         </div>
+        <div class="uk-navbar-right"><ul class = "uk-navbar-nav">
+                    <li>
+                    <a class="" uk-toggle="target: #postAd" aria-expanded="false">
+                      <span class = "r1"> Post</span>
+                    </a>
+                  </li>
+                    <li>
+                    <a class="" uk-toggle="target: #newForm" aria-expanded="false">
+                    <span class = "btn-main"> Mint</span>
+                    </a>
+                  </li>
+                  </ul></div>
       </nav>
-      <br /><br /> <br /><br /><br /><br />
     </div>
 </template>
 <script>

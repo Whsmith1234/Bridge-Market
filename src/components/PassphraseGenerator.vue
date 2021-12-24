@@ -35,6 +35,7 @@
           readonly
           rows="3"
           class="pt-0"
+          id = "f"
           color="grey"
           no-resize
           @click.prevent="selectText"
@@ -80,7 +81,11 @@
     />
   </div>
 </template>
-
+<style>
+#f{
+  font-size: 16px !important;
+}
+</style>
 <script>
 import * as bip39 from 'bip39'
 
@@ -163,6 +168,7 @@ export default {
     >>> .v-textarea
       .v-input__slot:before, .v-input__slot:after
         border-width: 0 // [2]
+        font-size:16px !important;
 
   &__icons
     margin-top: 10px

@@ -18,7 +18,7 @@ function getTime (date) {
   return time
 }
 
-function formatDate (timestamp) {
+export function formatDate (timestamp) {
   timestamp = parseInt(timestamp)
   // That's for the ADM timestamps, which use EPOCH as a base.
   // Other cryptos use normal timestamps
@@ -47,8 +47,8 @@ function formatDate (timestamp) {
   if (startToday.getFullYear() !== date.getFullYear()) {
     options.year = 'numeric'
   }
-
   return date.toLocaleDateString(this.$t('region'), options) + ', ' + getTime(date)
+  
 }
 
 function install (Vue) {

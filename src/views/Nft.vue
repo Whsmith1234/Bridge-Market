@@ -1,18 +1,21 @@
 <template>
   <div>
    <bridge-nav/>
+   <br><br><br><br><br><br><br>
    <div id="home">
    <h2 id = "title"> Owners of: {{name}} </h2>
    <a :href="url">
    <img :src ="url"/>
    </a>
+   <hr/>
    Minted By {{orig}}
     <center>
     <div :class="hide" uk-spinner>Verifying Owner</div>
     </center>
    <div v-for="transfer in transfers" :key="transfer">
-       Transfered to {{transfer}} <br/>
+       <hr/> Transfered to {{transfer}}
     </div>
+     <hr/>
     </div>
   </div>
 </template>
@@ -89,17 +92,20 @@ export default {
     const nft = urlParams.get('name')
     this.name = nft
     const ownerCheck = urlParams.get('owner')
-    var minted = await Ar.getStoredArray(nft, 2, 'asc')
+    var x = Ar.getStoredArray(nft, 2, 'asc');
+    var y = Ar.getStoredArray(nft + '|', 100, 'asc');
+    var minted = await x;
+    console.log(x);
     this.orig = minted[0].senderId
     this.url = minted[0].asset.state.value
-    var transactionSlice = await Ar.getStoredArray(nft + '|', 100, 'asc')
+    var transactionSlice = await y;
     var transfers = []
     var n = 1
     while (true) {
       try {
         if (transactionSlice.length > 99) {
           transfers = transfers.concat(transactionSlice)
-          transactionSlice = await await Ar.getStoredArray(nft + '|', 100, 'asc', 100 * n)
+          transactionSlice = await Ar.getStoredArray(nft + '|', 100, 'asc', 100 * n)
           n++
         } else {
           transfers = transfers.concat(transactionSlice)

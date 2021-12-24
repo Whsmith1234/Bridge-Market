@@ -4,6 +4,7 @@
     app
     height="50"
     class="app-navigation"
+    style=""
   >
     <v-layout justify-center>
       <container class="app-navigation__container">
@@ -13,43 +14,12 @@
             to="/home"
             flat
           >
-            <span>{{ $t('bottom.wallet_button') }}</span>
+            <span>{{ 'Wallets' }}</span>
             <v-icon size="20">
               mdi-wallet
             </v-icon>
           </v-btn>
 
-          <!-- Chat -->
-          <v-btn
-            to="/chats"
-            flat
-          >
-            <span>{{ $t('bottom.chats_button') }}</span>
-            <v-badge
-              overlap
-              color="primary"
-            >
-              <span
-                v-if="numOfNewMessages > 0"
-                slot="badge"
-              >
-                {{ numOfNewMessages > 99 ? '99+' : numOfNewMessages }}
-              </span>
-              <v-icon size="20">
-                mdi-forum
-              </v-icon>
-            </v-badge>
-          </v-btn>
-
-          <v-btn
-            to="/options"
-            flat
-          >
-            <span>{{ 'Settings' }}</span>
-            <v-icon size="20">
-              mdi-cog
-            </v-icon>
-          </v-btn>
           <!-- Settings -->
           <v-btn
             to="/available"
@@ -61,6 +31,15 @@
             </v-icon>
           </v-btn>
 
+          <v-btn
+            to="/options"
+            flat
+          >
+            <span>{{ 'Settings' }}</span>
+            <v-icon size="20">
+              mdi-cog
+            </v-icon>
+          </v-btn>
         </v-layout>
       </container>
     </v-layout>
@@ -75,11 +54,6 @@ export default {
         title: 'wallet',
         link: '/home',
         icon: 'mdi-wallet'
-      },
-      {
-        title: 'chats',
-        link: '/chats',
-        icon: 'mdi-forum'
       },
       {
         title: 'Market',

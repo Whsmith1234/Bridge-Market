@@ -21,9 +21,9 @@ export function navigateByURI (next) {
     )
   } else {
     if (next) {
-      next({ name: 'Chats' })
+      next({ name: 'Available' })
     } else {
-      router.push({ name: 'Chats' })
+      router.push({ name: 'Available' })
     }
   }
 }

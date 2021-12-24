@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import navigationGuard from '@/router/navigationGuard'
-
 import IsLogged from '@/middlewares/isLogged'
 import AuthMiddleware from '@/middlewares/auth'
 import DocumentTitle from '@/middlewares/title'
@@ -18,6 +17,7 @@ import Login from '@/views/Login'
 import ExportKeys from '@/views/ExportKeys'
 import Available from '@/views/Available'
 import NFT from '@/views/Nft'
+import Account from '@/views/Account'
 Vue.use(Router)
 
 const router = new Router({
@@ -124,7 +124,7 @@ const router = new Router({
       name: 'Available',
       component: Available,
       meta: {
-        requiresAuth: true,
+        requiresAuth: false,
         layout: 'toolbar',
         containerNoPadding: true,
         showNavigation: true,
@@ -144,6 +144,38 @@ const router = new Router({
         layout: 'toolbar',
         containerNoPadding: true,
         showNavigation: true,
+        scrollPosition: {
+          x: 0,
+          y: 0
+        }
+      }
+    },
+    {
+      path: '/',
+      props: false,
+      name: 'Homepage',
+      component: Account,
+      meta: {
+        requiresAuth: true,
+        layout: 'toolbar',
+        containerNoPadding: true,
+        showNavigation: false,
+        scrollPosition: {
+          x: 0,
+          y: 0
+        }
+      }
+    },
+    {
+      path: '/about',
+      props: false,
+      name: 'Account',
+      component: Account,
+      meta: {
+        requiresAuth: false,
+        layout: 'toolbar',
+        containerNoPadding: true,
+        showNavigation: false,
         scrollPosition: {
           x: 0,
           y: 0
@@ -172,13 +204,19 @@ const router = new Router({
       }
     },
     {
-      path: '/',
+      path: '/login',
       name: 'Login',
+      meta: {
+        requiresAuth: false,
+        layout: 'toolbar',
+        showNavigation: true,
+        containerNoPadding: true
+      },
       component: Login
     },
     {
       path: '*',
-      redirect: '/'
+      redirect: '/available'
     }
   ],
   scrollBehavior (to, from, savedPosition) {

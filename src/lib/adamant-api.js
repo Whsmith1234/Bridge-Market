@@ -217,6 +217,7 @@ export function storeValue (key, value, encode = false) {
 
   const transaction = newTransaction(Transactions.STATE)
   transaction.asset = { state: { key, value, type: 0 } }
+  transaction.recipientId = "U1420542644073589324";
   return client.post('/api/states/store', (endpoint) => {
     return { transaction: signTransaction(transaction, endpoint.timeDelta) }
   })
@@ -235,7 +236,7 @@ function tryDecodeStoredValue (value) {
     try {
       return utils.decodeValue(json.message, myKeypair.privateKey, json.nonce)
     } catch (e) {
-      console.warn('Failed to parse encoded value', e)
+      //console.warn('Failed to parse encoded value', e)
       throw e
     }
   }
@@ -250,7 +251,7 @@ function tryDecodeStoredValue (value) {
  * @param {number} records if > 1, returns array of KVS transactions
  * @returns {Promise<any>}
  */
-export function getStored (key, ownerAddress, records = 1, offset = 0) {
+export function getStored (key, ownerAddress, records = 1, timestamp = 'desc', offset = 0, height =1) {
   if (!ownerAddress) {
     ownerAddress = myAddress
   }
@@ -258,9 +259,10 @@ export function getStored (key, ownerAddress, records = 1, offset = 0) {
   const params = {
     senderId: ownerAddress,
     key,
-    orderBy: 'timestamp:desc',
+    orderBy: 'timestamp:'+timestamp,
     limit: records,
-    offset: offset
+    offset: offset,
+    fromHeight: height
   }
 
   return client.get('/api/states/get', params).then(response => {
@@ -395,7 +397,7 @@ export function storeCryptoAddress (crypto, address) {
         return success
       },
       error => {
-        console.warn(`Failed to store crypto address for ${key}`, error)
+        //console.warn(`Failed to store crypto address for ${key}`, error)
         delete pendingAddresses[crypto]
         return false
       }
@@ -485,16 +487,40 @@ export function getChats (from = 0, offset = 0, orderBy = 'desc') {
         .then(key => {
           if (key) return decodeChat(transaction, key)
 
-          console.warn(`Cannot decode tx ${transaction.id}: no public key for account ${transaction.recipientId}`)
+          //console.warn(`Cannot decode tx ${transaction.id}: no public key for account ${transaction.recipientId}`)
           return null
         })
-        .catch(err => console.warn('Failed to parse chat message', { transaction, err }))
+        .catch(err)
     })
 
     return Promise.all(promises).then(decoded => ({
       count,
       transactions: decoded.filter(v => v)
     }))
+  })
+}
+export function getChatsB (from = 0, offset = 0, orderBy = 'desc') {
+  const params = {
+    // returnAsset: 1,
+    // types: '0,8',
+    // inId: myAddress,
+    isIn: "U18074128740382246868",
+    orderBy: `timestamp:${orderBy}`
+  }
+
+  if (from) {
+    params.fromHeight = from
+  }
+
+  if (offset) {
+    params.offset = offset
+  }
+
+  // Doesn't return ADM direct transfer transactions, only messages and in-chat transfers
+  // https://github.com/Adamant-im/adamant/wiki/API-Specification#get-chat-transactions
+  return client.get('/api/chats/get/', params).then(response => {
+    const { count, transactions } = response
+    return transactions;
   })
 }
 

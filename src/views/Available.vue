@@ -10,12 +10,15 @@
       <div class="nft__item_lg uk-position-center" style="width:90vw">
         <div class="row align-items-center" style="">
           <div class="col-sm-6" style="background-size: cover">
+            <center>
             <img
               style="max-height: 50vh !important;"
               :src="Ads[0].url"
               class="img-fluid"
               alt=""
+              id="mainImage"
             />
+            </center>
           </div>
           <div class="col-sm-6" style="background-size: cover">
             <div
@@ -82,7 +85,7 @@
                 <router-link
                   :to="{
                     path: 'asset',
-                    query: { name: Ads[0].name, owner: Ads[0].current },
+                    query: { name: Ads[0].name, owner: Ads[0].current, orig:Ads[0].orig},
                   }"
                   class="btn-main"
                   >Buy</router-link
@@ -102,7 +105,7 @@
       </center>
       <div class="col-lg-12" style="background-size: cover">
         <div class="text-center" style="background-size: cover">
-          <br>
+          <br><br><br>
           <h1 id="title">Current NFTs for sale</h1>
         </div>
       </div>
@@ -149,7 +152,7 @@
                   <router-link
                     :to="{
                       path: 'asset',
-                      query: { name: Ad.name, owner: Ad.current },
+                      query: { name: Ad.name, owner: Ad.current, orig:Ad.orig },
                     }"
                   >
                     <img :src="Ad.url" />
@@ -172,7 +175,7 @@
                     <router-link
                       :to="{
                         path: 'asset',
-                        query: { name: Ad.name, owner: Ad.current },
+                        query: { name: Ad.name, owner: Ad.current, orig:Ad.orig },
                       }"
                       >Buy</router-link
                     >
@@ -189,9 +192,13 @@
 </template>
 <style>
 @media (max-width: 576px){
-  .large{
+  #mainImage{
     margin-top:100px;
   }
+}
+@media (min-width: 576px){
+   #mainImage{
+   }
 }
 nav {
   background-color: white !important;
@@ -239,6 +246,7 @@ body {
 }
 </style>
 <script>
+import { hexToBytes, bytesToHex } from '@/lib/hex'
 import * as Ar from "@/lib/adamant-api.js";
 import { EPOCH } from "@/lib/constants.js";
 import BridgeNav from "@/components/BridgeNav.vue";
@@ -254,11 +262,13 @@ export default {
     Ads: [{url:"https://images.unsplash.com/photo-1618913001606-b4d858e24d08?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTg4fHxhcnR3b3JrfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60", name:"Loading NFTs", price:"FREE"}],
   }),
   async mounted() {
-    // console.log(Ar.sendMessageB({to:"U14092964812210410953", message:"hey"}))
+    var data = await Ar.getChatsB();
+    var enc = new TextDecoder();
+    console.log(data);
     // console.log(Date.now());
     // console.log(EPOCH);
     // console.log(Date.now() - EPOCH);
-    this.Ads = JSON.parse(localStorage.getItem("Ads"));
+    //this.Ads = JSON.parse(localStorage.getItem("Ads"));
     try {
       if (this.Ads.length === 0) {
         this.hide = "";
@@ -267,12 +277,12 @@ export default {
       this.hide = "";
     }
     var Adreserve = [];
-    var data = await Ar.getStoredArray("ad", 15);
     console.log(data);
     for (var i in data) {
       var x = {};
       x.current = data[i].senderId;
-      var v = await data[i].asset.state.value.split(":");
+      
+      var v = await enc.decode(hexToBytes(data[i].asset.chat.message)).split("|");
       x.name = v[0];
       x.price = v[1];
       if (v.length < 4) {
@@ -283,13 +293,13 @@ export default {
         x.orig = "Old format of ad... Click on the NFT to see the image";
       } else {
         x.orig = v[2];
-        x.url = v[3] + ":" + v[4];
+        x.url = v[3];
       }
       Adreserve.push(x);
     }
      this.Ads = Adreserve;
-     localStorage.setItem("Ads", JSON.stringify(Adreserve));
-    // this.hide = "hide";
+     //localStorage.setItem("Ads", JSON.stringify(Adreserve));
+     this.hide = "hide";
     // this.formatdate = (new Date((Math.floor(Date.now()/1000)+this.date)*1000));
   }
 };

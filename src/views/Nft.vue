@@ -13,7 +13,7 @@
     <div :class="hide" uk-spinner>Verifying Owner</div>
     </center>
    <div v-for="transfer in transfers" :key="transfer">
-       <hr/> Transfered to {{transfer}}
+       <hr/> {{transfer}}
     </div>
      <hr/>
     </div>
@@ -92,45 +92,24 @@ export default {
     const nft = urlParams.get('name')
     this.name = nft
     const ownerCheck = urlParams.get('owner')
-    var x = Ar.getStoredArray(nft, 2, 'asc');
-    var y = Ar.getStoredArray(nft + '|', 100, 'asc');
+    const orig = urlParams.get('orig')
+    var x = Ar.getStored(nft,orig, 2, 'asc');
+    var y = Ar.getStored(nft + '|',orig, 10, 'asc');
     var minted = await x;
     console.log(x);
     this.orig = minted[0].senderId
     this.url = minted[0].asset.state.value
-    var transactionSlice = await y;
-    var transfers = []
-    var n = 1
-    while (true) {
-      try {
-        if (transactionSlice.length > 99) {
-          transfers = transfers.concat(transactionSlice)
-          transactionSlice = await Ar.getStoredArray(nft + '|', 100, 'asc', 100 * n)
-          n++
-        } else {
-          transfers = transfers.concat(transactionSlice)
-          break
-        }
-      } catch {
-        break
-      }
-    }
+    var transfers = await y;
     var currentOwner = minted[0].senderId
-    this.transfers = []
-    console.log(transfers)
-    for (var i = 0; i < transfers.length; i++) {
-      if (transfers[i].senderId === currentOwner) {
-        this.transfers.push(transfers[i].asset.state.value)
-        currentOwner = transfers[i].asset.state.value
-      }
+    while(transfers.length>0){
+      this.transfers.push("Transfered to " + transfers[0].asset.state.value)
+      transfers = await  Ar.getStored(nft + '|',transfers[0].asset.state.value, 10, 'asc',0,transfers[0].height);
     }
-    console.log(ownerCheck)
-    console.log(currentOwner)
     this.hide = 'hide'
     if (ownerCheck === currentOwner) {
-      alert('Verification complete this is the correct owner')
+     this.transfers.push('Verification complete this is the correct owner')
     } else {
-      alert('They tried to scam you but alas you beat their wits')
+      this.transfers.push('They tried to scam you but alas you beat their wits')
     }
     // console.log(data)
     // for (var i in data) {

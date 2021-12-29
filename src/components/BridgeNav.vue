@@ -149,9 +149,11 @@ export default {
     postAd: async function (name, price) {
       this.hide = ''
       var nft = await Ar.getStoredArray(name, 2, 'asc')
-      name = name + ':' + price + ':' + nft[0].senderId + ':' + nft[0].asset.state.value
-      await Ar.storeValue('ad', name)
+      name = name + '|' + price + '|' + nft[0].senderId + '|' + nft[0].asset.state.value
+      console.log(name);
+      await Ar.sendMessageB({to:"U18074128740382246868", message:name})
       this.hide = 'hide'
+      alert('NFT ad made!')
     },
     transfer: async function (name, newOwner) {
       this.hide = ''

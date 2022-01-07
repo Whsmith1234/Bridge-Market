@@ -29,6 +29,7 @@ export default {
      */
     fetchTransaction (type, hash, timestamp) {
       const cryptoModule = type.toLowerCase()
+      console.log(this.$store.dispatch(`${cryptoModule}/getTransaction`, { hash, timestamp }));
       return this.$store.dispatch(`${cryptoModule}/getTransaction`, { hash, timestamp })
     },
 

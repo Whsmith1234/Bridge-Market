@@ -131,32 +131,6 @@ export default {
     // this.Ads = Adreserve
     // localStorage.setItem('Ads', JSON.stringify(Adreserve))
     // this.hide = 'hide'
-  },
-  methods: {
-    mint: async function (name, url) {
-      this.hide = ''
-      var data = await Ar.getStoredArray(name, 2)
-      console.log(data)
-      if (data.length === 0) {
-        Ar.storeValue(name, url)
-        alert('Your NFT has been minted!')
-      } else {
-        alert('Name already taken sorry')
-      }
-      this.hide = 'hide'
-    },
-    postAd: async function (name, price) {
-      this.hide = ''
-      var nft = await Ar.getStoredArray(name, 2, 'asc')
-      name = name + ':' + price + ':' + nft[0].senderId + ':' + nft[0].asset.state.value
-      await Ar.storeValue('ad', name)
-      this.hide = 'hide'
-    },
-    transfer: async function (name, newOwner) {
-      this.hide = ''
-      await Ar.storeValue(name + '|', newOwner)
-      this.hide = 'hide'
-    }
   }
 }
 /*

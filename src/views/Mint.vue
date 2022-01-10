@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <template>
   <div>
    <bridge-nav/>
@@ -55,3 +56,8 @@ export default {
 Buy now links to ?address=U14236667426471084862&label=John%20Doe&amount=1.01&message=Hi%20there
 */
 </script>
+=======
+input name
+input url or store in arweve for permanent storage and premium NFT
+Make this page avilable to authenticated users.
+>>>>>>> b1d55af8625dad8d5a5c3230dd78cb66761c04b7

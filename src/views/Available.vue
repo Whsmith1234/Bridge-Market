@@ -175,7 +175,7 @@
                     <router-link
                       :to="{
                         path: 'asset',
-                        query: { name: Ad.name, owner: Ad.current, orig:Ad.orig },
+                        query: { name: Ad.name, owner: Ad.current, orig: Ad.orig },
                       }"
                       >Buy</router-link
                     >

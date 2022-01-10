@@ -18,6 +18,7 @@ import ExportKeys from '@/views/ExportKeys'
 import Available from '@/views/Available'
 import NFT from '@/views/Nft'
 import Account from '@/views/Account'
+import Mint from '@/views/Mint'
 Vue.use(Router)
 
 const router = new Router({
@@ -125,6 +126,22 @@ const router = new Router({
       component: Available,
       meta: {
         requiresAuth: false,
+        layout: 'toolbar',
+        containerNoPadding: true,
+        showNavigation: true,
+        scrollPosition: {
+          x: 0,
+          y: 0
+        }
+      }
+    },
+    {
+      path: '/mint',
+      props: true,
+      name: 'Mint',
+      component: Mint,
+      meta: {
+        requiresAuth: true,
         layout: 'toolbar',
         containerNoPadding: true,
         showNavigation: true,

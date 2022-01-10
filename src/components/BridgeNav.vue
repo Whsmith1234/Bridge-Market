@@ -1,34 +1,5 @@
 <template>
     <div class="layout justify-center">
-      <div id="modal-example" uk-modal="" class="uk-modal" style="" tabindex="0">
-        <div class="uk-modal-dialog uk-modal-body">
-          <h2 class="uk-modal-title">BridgeMarket NFTs</h2>
-          <p>Hello! Bridge Market is a new kind of NFT Market which allows you to buy and sell NFTs across multiple crypto-currencies. The protocol we have in place is completely decentralized and can be built on top of using an api coming out soon. The interface we have abstracts away the mess to give you a clean experience.</p>
-          <p>We hope you enjoy.</p>
-          <p>Bridge Market</p>
-          <p><br></p>
-        </div>
-      </div>
-      <div id="newForm" uk-modal="" class="uk-modal" style="" tabindex="0">
-        <div class="uk-modal-dialog uk-modal-body">
-          <h2 class="uk-modal-title">Mint an NFT</h2>
-          <form>
-            <fieldset class="uk-fieldset">
-              <div class="uk-margin">
-                <input v-model="name" class="uk-input" type="text" placeholder="Name">
-              </div>
-              We recomment using a service like <a href="https://imgur.com/upload">imgur</a> or <a href="https://postimages.org/">postimages</a>. If you then open the uploaded image in a new tab it will often give the link to the image ending in .jpg or some other png format. To check this worked see if the image comes up under the form.
-              <div class="uk-margin">
-                <input v-model="url" class="uk-input" type="text" placeholder="Image url...">
-              </div>
-              <div class="uk-margin">
-                <a v-on:click="mint(name, url)" class="uk-button uk-button-primary">Mint your NFT <div :class="hide" uk-spinner></div> </a>
-              </div>
-              <img :src="url" />
-            </fieldset>
-          </form>
-        </div>
-      </div>
       <div id="postAd" uk-modal="" class="uk-modal" style="" tabindex="0">
         <div class="uk-modal-dialog uk-modal-body">
           <h2 class="uk-modal-title">Post a Public Ad for your Nft</h2>

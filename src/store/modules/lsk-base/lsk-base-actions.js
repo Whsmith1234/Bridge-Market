@@ -171,7 +171,7 @@ function createActions (options) {
       let retry = false
       let retryTimeout = 0
       const attempt = payload.attempt || 0
-
+      console.log(tx);
       if (tx) {
         context.commit('transactions', [tx])
         // The transaction has been confirmed, we're done here

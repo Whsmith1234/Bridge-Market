@@ -195,11 +195,14 @@ export default function createActions (config) {
         if (!err && tx && tx.input) {
           const transaction = parseTransaction(context, tx)
           const status = existing ? existing.status : 'REGISTERED'
+         
           if (transaction) {
+            //console.log(trasaction);
             context.commit('transactions', [{
               ...transaction,
               status
             }])
+            console.log(transaction);
             // Fetch receipt details: status and actual gas consumption
             const { attempt, ...receiptPayload } = payload
             context.dispatch('getTransactionReceipt', receiptPayload)
@@ -256,7 +259,7 @@ export default function createActions (config) {
             hash: payload.hash,
             fee: utils.calculateFee(tx.gasUsed, gasPrice)
           }
-
+          //console.log(tx);
           if (Number(tx.status) === 0) {
             // Status "0x0" means that the transaction has been rejected
             update.status = 'REJECTED'
@@ -274,7 +277,7 @@ export default function createActions (config) {
               blockNumber: tx.blockNumber
             })
           }
-
+          //console.log(update);
           // Re-fetch tx details if it's status is still unknown
           replay = !update.status
         }

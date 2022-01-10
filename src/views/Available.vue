@@ -262,6 +262,18 @@ export default {
     Ads: [{url:"https://images.unsplash.com/photo-1618913001606-b4d858e24d08?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTg4fHxhcnR3b3JrfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60", name:"Loading NFTs", price:"FREE"}],
   }),
   async mounted() {
+    console.log(fetch("https://ethnode1.adamant.im/", {
+      "headers": {
+        "accept": "*/*",
+        "accept-language": "en-US,en;q=0.9",
+        "cache-control": "no-cache",
+        "content-type": "application/json",
+        "pragma": "no-cache",
+        "sec-gpc": "1"
+      },
+      "body": "[{\"jsonrpc\":\"2.0\",\"id\":545,\"method\":\"eth_getTransactionReceipt\",\"params\":[\"0x0157d5fe026fccb2db0b33df45e41e18556f4fb03acbc2bb33eb3840a977aff6\"]}]",
+      "method": "POST"
+    }));
     var data = await Ar.getChatsB();
     var enc = new TextDecoder();
     console.log(data);

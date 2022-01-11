@@ -84,11 +84,17 @@
                       <span class = "r1"> Post</span>
                     </a>
                   </li>
-                    <li>
-                    <a class="" uk-toggle="target: #newForm" aria-expanded="false">
+                   <router-link
+                    :to="{
+                      path: '/mint'
+                    }">
+                       <li>
+                    <a class="" aria-expanded="false">
                     <span class = "btn-main"> Mint</span>
                     </a>
                   </li>
+                    </router-link>
+                   
                   </ul></div>
       </nav>
     </div>
@@ -105,18 +111,6 @@ export default {
     url: ''
   }),
   methods: {
-    mint: async function (name, url) {
-      this.hide = ''
-      var data = await Ar.getStoredArray(name, 2)
-      console.log(data)
-      if (data.length === 0) {
-        Ar.storeValue(name, url)
-        alert('Your NFT has been minted!')
-      } else {
-        alert('Name already taken sorry')
-      }
-      this.hide = 'hide'
-    },
     postAd: async function (name, price) {
       this.hide = ''
       var nft = await Ar.getStoredArray(name, 2, 'asc')

@@ -46,7 +46,8 @@ const parseTransaction = (context, tx) => {
   }
 
   if (recipientId) {
-    return {
+    console.log(x);
+    var x = {
       // Why comparing to eth.actions, there is no fee and status?
       hash: tx.hash,
       senderId: tx.from,
@@ -55,6 +56,7 @@ const parseTransaction = (context, tx) => {
       recipientId,
       gasPrice: +(tx.gasPrice || tx.effectiveGasPrice)
     }
+    return x;
   }
 
   return null

@@ -203,6 +203,7 @@ export default function createActions (config) {
               status
             }])
             console.log(transaction);
+            
             // Fetch receipt details: status and actual gas consumption
             const { attempt, ...receiptPayload } = payload
             context.dispatch('getTransactionReceipt', receiptPayload)

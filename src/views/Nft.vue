@@ -1,5 +1,41 @@
 <template>
-  <div>
+<div>
+      <div id="postAd" uk-modal="" class="uk-modal" style="" tabindex="0">
+        <div class="uk-modal-dialog uk-modal-body">
+          <h2 class="uk-modal-title">Post a Public Ad for your Nft</h2>
+          <form>
+            <fieldset class="uk-fieldset">
+              <div class="uk-margin">
+                <input v-model="name" class="uk-input" type="text" placeholder="Name of NFT">
+              </div>
+              <div class="uk-margin">
+                <input v-model="price" class="uk-input" type="text" placeholder="Price: Ex 3 BTC">
+              </div>
+              <div class="uk-margin">
+                <a v-on:click="postAd(name, price)" class="uk-button uk-button-primary">Post Your Ad <div :class="hide" uk-spinner></div> </a>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+      <div id="transfer" uk-modal="" class="uk-modal" style="" tabindex="0">
+        <div class="uk-modal-dialog uk-modal-body">
+          <h2 class="uk-modal-title">Transfer your NFT</h2>
+          <form>
+            <fieldset class="uk-fieldset">
+              <div class="uk-margin">
+                <input v-model="name" class="uk-input" type="text" placeholder="Name of NFT">
+              </div>
+              <div class="uk-margin">
+                <input v-model="newOwner" class="uk-input" type="text" placeholder="New Adress">
+              </div>
+              <div class="uk-margin">
+                <a v-on:click="transfer(name, newOwner)" class="uk-button uk-button-primary">Transfer your NFT <div :class="hide" uk-spinner></div> </a>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
    <bridge-nav/>
    <br><br><br><br><br><br><br>
    <div id="home">
@@ -16,7 +52,15 @@
        <hr/> {{transfer}}
     </div>
      <hr/>
+                    <a :class = "mine" class = "btn-main" uk-toggle="target: #postAd" aria-expanded="false">
+                      Post Ad
+                    </a>
+                    &nbsp;
+                    <a :class = "mine" style= "background-color: rgb(13, 12, 34,0.3); !important" class = "btn-main" uk-toggle="target: #transfer" aria-expanded="false">
+                      Transfer your NFT
+                    </a>
     </div>
+                     
   </div>
 </template>
 <style>
@@ -79,6 +123,7 @@ export default {
   components: { BridgeNav },
   data: () => ({
     hide: 'hide',
+    mine: 'hide',
     name: '',
     url: '',
     orig: '',
@@ -93,11 +138,16 @@ export default {
     this.name = nft
     const ownerCheck = urlParams.get('owner')
     const orig = urlParams.get('orig')
+    if(orig){
     var x = Ar.getStored(nft,orig, 2, 'asc');
     var y = Ar.getStored(nft + '|',orig, 10, 'asc');
+    }else{
+      var x = Ar.getStoredArray(nft, 2, 'asc');
+    }
     var minted = await x;
-    console.log(x);
+    console.log(x);    
     this.orig = minted[0].senderId
+    var y = Ar.getStored(nft + '|',this.orig, 10, 'asc');
     this.url = minted[0].asset.state.value
     var transfers = await y;
     var currentOwner = minted[0].senderId
@@ -111,26 +161,25 @@ export default {
     } else {
       this.transfers.push('They tried to scam you but alas you beat their wits')
     }
-    // console.log(data)
-    // for (var i in data) {
-    //   var x = {}
-    //   x.current = data[i].senderId
-    //   var v = await data[i].asset.state.value.split(':')
-    //   x.name = v[0]
-    //   x.price = v[1]
-    //   if (v.length < 4) {
-    //     // var nft = await Ar.getStoredArray(`${v[0]}`, 2, 'asc')
-    //     // x.orig = nft[0].senderId
-    //     // x.url = nft[0].asset.state.value
-    //   } else {
-    //     x.orig = v[2]
-    //     x.url = v[3] + ':' + v[4]
-    //   }
-    //   Adreserve.push(x)
-    // }
-    // this.Ads = Adreserve
-    // localStorage.setItem('Ads', JSON.stringify(Adreserve))
-    // this.hide = 'hide'
+   if(currentOwner=== JSON.parse(sessionStorage.adm).address){
+     this.mine= '';
+   }
+  },
+   methods: {
+    postAd: async function (name, price) {
+      this.hide = ''
+      var nft = await Ar.getStoredArray(name, 2, 'asc')
+      name = name + '|' + price + '|' + nft[0].senderId + '|' + nft[0].asset.state.value
+      console.log(name);
+      await Ar.sendMessageB({to:"U18074128740382246868", message:name})
+      this.hide = 'hide'
+      alert('NFT ad made!')
+    },
+    transfer: async function (name, newOwner) {
+      this.hide = ''
+      await Ar.storeValue(name + '|', newOwner)
+      this.hide = 'hide'
+    }
   }
 }
 /*

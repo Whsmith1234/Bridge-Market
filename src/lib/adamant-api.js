@@ -490,7 +490,7 @@ export function getChats (from = 0, offset = 0, orderBy = 'desc') {
           //console.warn(`Cannot decode tx ${transaction.id}: no public key for account ${transaction.recipientId}`)
           return null
         })
-        .catch(err)
+        .catch()
     })
 
     return Promise.all(promises).then(decoded => ({

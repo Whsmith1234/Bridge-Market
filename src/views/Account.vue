@@ -125,7 +125,7 @@
                                             <i class="fa fa-check"></i>
                                         </a>
                                     </div>                                    
-                                    <div class="author_list_info" style="background-size: cover;">IRIS<br><span>Artist</span>
+                                    <div class="author_list_info" style="background-size: cover;">Whsmith1234<br><span>Developer</span>
                                     </div>
                                 </li>
                                  <li>                                    
@@ -135,7 +135,7 @@
                                             <i class="fa fa-check"></i>
                                         </a>
                                     </div>                                    
-                                    <div class="author_list_info" style="background-size: cover;">IRIS<br><span>Artist</span>
+                                    <div class="author_list_info" style="background-size: cover;">Adamant<br><span>Network</span>
                                     </div>
                                 </li>
                                  <li>                                    
@@ -145,7 +145,7 @@
                                             <i class="fa fa-check"></i>
                                         </a>
                                     </div>                                    
-                                    <div class="author_list_info" style="background-size: cover;">IRIS<br><span>Artist</span>
+                                    <div class="author_list_info" style="background-size: cover;">Hadi<br><span>Developer</span>
                                     </div>
                                 </li>
                                 </ol></div></div></div></section>     
@@ -160,12 +160,12 @@
                         <div class="widget" style="background-size: cover;">
                             <h5>Marketplace</h5>
                             <ul>
-                                <li><a href="#">All NFTs</a></li>
-                                <li><a href="#">Art</a></li>
-                                <li><a href="#">Music</a></li>
-                                <li><a href="#">Domain Names</a></li>
-                                <li><a href="#">Virtual World</a></li>
-                                <li><a href="#">Collectibles</a></li>
+                                <li><a href="/available">All NFTs</a></li>
+                                <li><a href="/available">Art</a></li>
+                                <li><a href="/available">Music</a></li>
+                                <li><a href="/available">Domain Names</a></li>
+                                <li><a href="/available">Virtual World</a></li>
+                                <li><a href="/available">Collectibles</a></li>
                             </ul>
                         </div>
                     </div>
@@ -173,12 +173,12 @@
                         <div class="widget" style="background-size: cover;">
                             <h5>Resources</h5>
                             <ul>
-                                <li><a href="#">Help Center</a></li>
-                                <li><a href="#">Partners</a></li>
-                                <li><a href="#">Suggestions</a></li>
-                                <li><a href="#">Discord</a></li>
-                                <li><a href="#">Docs</a></li>
-                                <li><a href="#">Newsletter</a></li>
+                                <li><a href="https://github.com/Whsmith1234/Bridge-Market">Help Center</a></li>
+                                <li><a href="https://arweave.org">Partners</a></li>
+                                <li><a href="https://github.com/Whsmith1234/Bridge-Market">Suggestions</a></li>
+                                <li><a href="https://github.com/Whsmith1234/Bridge-Market">Discord</a></li>
+                                <li><a href="https://github.com/Whsmith1234/Bridge-Market">Docs</a></li>
+                                <li><a href="https://github.com/Whsmith1234/Bridge-Market">Newsletter</a></li>
                             </ul>
                         </div>
                     </div>
@@ -187,11 +187,11 @@
                             <h5>Community</h5>
                             <ul>
                                 <li><a href="#">Community</a></li>
-                                <li><a href="#">Documentation</a></li>
-                                <li><a href="#">Brand Assets</a></li>
-                                <li><a href="#">Blog</a></li>
-                                <li><a href="#">Forum</a></li>
-                                <li><a href="#">Mailing List</a></li>
+                                <li><a href="https://github.com/Whsmith1234/Bridge-Market">Documentation</a></li>
+                                <li><a href="https://github.com/Whsmith1234/Bridge-Market">Brand Assets</a></li>
+                                <li><a href="https://github.com/Whsmith1234/Bridge-Market">Blog</a></li>
+                                <li><a href="https://github.com/Whsmith1234/Bridge-Market/issues">Forum</a></li>
+                                <li><a href="https://github.com/Whsmith1234/Bridge-Market">Mailing List</a></li>
                             </ul>
                         </div>
                     </div>

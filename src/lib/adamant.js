@@ -383,11 +383,14 @@ adamant.decodeMessage = function (msg, senderPublicKey, privateKey, nonce) {
   if (typeof privateKey === 'string') {
     privateKey = hexToBytes(privateKey)
   }
-
+  const decrypted = '';
+try{
   const DHPublicKey = ed2curve.convertPublicKey(senderPublicKey)
   const DHSecretKey = ed2curve.convertSecretKey(privateKey)
   const decrypted = nacl.box.open(msg, nonce, DHPublicKey, DHSecretKey)
-
+}catch{
+  const decrypted = '';
+}
   return decrypted ? decode(decrypted) : ''
 }
 

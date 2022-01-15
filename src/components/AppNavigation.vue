@@ -19,6 +19,15 @@
               mdi-wallet
             </v-icon>
           </v-btn>
+          <v-btn
+            to="/chats"
+            flat
+          >
+            <span>{{ 'chats' }}</span>
+            <v-icon size="20">
+              mdi-comment-text
+            </v-icon>
+          </v-btn>
 
           <!-- Settings -->
           <v-btn

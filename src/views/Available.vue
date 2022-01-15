@@ -106,10 +106,11 @@
       <div class="col-lg-12" style="background-size: cover">
         <div class="text-center" style="background-size: cover">
           <br><br><br>
-          <h1 id="title">Current NFTs for sale</h1>
+         <center> <h1 id="title">Current NFTs for sale</h1> </center>
         </div>
       </div>
-      <ul class="cards">
+      <div >
+      <ul class="uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-4@l" uk-grid="masonry: true">
         <div
           uk-scrollspy="cls:uk-animation-fade; repeat: true"
           v-for="Ad in Ads"
@@ -117,6 +118,7 @@
           class="uk-first-column"
           style="transform: translateY(0px)"
         >
+        
           <div class="owl-item active" style="width: 100%; margin-right: 25px">
             <div class="d-item" style="display: block; background-size: cover">
               <div class="nft__item" style="background-size: cover">
@@ -159,12 +161,14 @@
                   </router-link>
                 </div>
                 <div class="nft__item_info" style="background-size: cover">
-                  <a
-                    data-savepage-href="item-details.html"
-                    href="/"
+                  <router-link
+                    :to="{
+                      path: 'asset',
+                      query: { name: Ad.name, owner: Ad.current, orig:Ad.orig },
+                    }"
                   >
                     <h4>{{ Ad.name }}</h4>
-                  </a>
+                  </router-link>
                   <div class="nft__item_price" style="background-size: cover">
                     Made By: {{ Ad.orig }}
                   </div>
@@ -186,6 +190,7 @@
           </div>
         </div>
       </ul>
+      </div>
       <br>
     </div>
   </div>

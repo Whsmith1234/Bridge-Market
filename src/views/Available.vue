@@ -196,14 +196,9 @@
   </div>
 </template>
 <style>
-@media (max-width: 576px){
-  #mainImage{
-    margin-top:100px;
-  }
-}
-@media (min-width: 576px){
-   #mainImage{
-   }
+a{
+  text-decoration-color: none !important;
+  color:black;
 }
 nav {
   background-color: white !important;

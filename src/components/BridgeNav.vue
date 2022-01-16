@@ -33,7 +33,7 @@
                     :to="{
                       path: '/search'
                     }">
-                    <span class = ""> Search</span>
+                    <span class = "fa fa-search"></span>
                     </router-link>
                    </li>
                        <li>

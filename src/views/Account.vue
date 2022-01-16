@@ -265,11 +265,12 @@
             </div>
           </div>
         </section>
+        
         <section
           id="section-intro"
           class="no-top no-bottom"
           style="background-size: cover"
-        >
+        ><a href="/mint" style="color:black;">
           <div class="container" style="background-size: cover">
             <div class="row" style="background-size: cover">
               <div
@@ -393,7 +394,9 @@
               </div>
             </div>
           </div>
+           </a>
         </section>
+       
         <a
           href="https://github.com/Whsmith1234/Bridge-Market/blob/master/Environment.md"
         >
@@ -840,6 +843,7 @@
   </div>
 </template>
 <style>
+
 @media (max-width: 576px) {
   .large {
     margin-top: 100px;

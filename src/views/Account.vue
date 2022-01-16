@@ -51,7 +51,7 @@
 
             <section id="section-collections" class="no-bottom" style="background-size: cover;">
                 <div class="container" style="background-size: cover;">
-                    <div class="row" style="background-size: cover;">
+                   <a href="https://github.com/Whsmith1234/Bridge-Market/blob/master/Environment.md"> <div class="row" style="background-size: cover;">
                         <div class="col-lg-12" style="background-size: cover;">
                             <div class="text-center" style="background-size: cover;">
                                 <h2>About</h2></div></div></div></div></section><section id="section-items" class="container no-bottom" style="background-size: cover;"><div class="row" style="background-size: cover;/* width: 80%; *//* margin-left: var(--bs-gutter-x); */"><div class="col-lg-3 col-md-4 mb-sm-6" style="background-size: cover;"><div class="feature-box f-boxed style-3" style="background-size: cover;"><i class="wow fadeInUp bg-color-2 i-boxed animated animated fa fa-tree" style="visibility: visible; animation-name: fadeInUp;"></i><div class="text" style="background-size: cover;">
@@ -65,7 +65,7 @@
                                     <h4 class="wow fadeInUp animated animated animated" style="visibility: visible; animation-name: fadeInUp;">Cross Chain Transactions&nbsp;</h4></div>
                             </div>
                         </div><div class="col-lg-3 col-md-4 mb-sm-6" style="background-size: cover;"><div class="feature-box f-boxed style-3" style="background-size: cover;"><i class="wow fadeInUp bg-color-2 i-boxed animated animated fa fa-check animated" style="visibility: visible; animation-name: fadeInUp;"></i><div class="text" style="background-size: cover;">
-                                    <h4 class="wow fadeInUp animated animated animated" style="visibility: visible; animation-name: fadeInUp;">Verifiable Artists</h4></div></div></div>
+                                    <h4 class="wow fadeInUp animated animated animated" style="visibility: visible; animation-name: fadeInUp;">Verifiable Artists</h4></div></div></div></a>
                     </div></section>
 
             <section id="section-popular" class="pb-5" style="background-size: cover;">

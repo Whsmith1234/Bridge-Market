@@ -23,7 +23,7 @@
             to="/chats"
             flat
           >
-            <span>{{ 'chats' }}</span>
+            <span>{{ 'Chats' }}</span>
             <v-icon size="20">
               mdi-comment-text
             </v-icon>

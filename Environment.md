@@ -10,4 +10,4 @@ Our protocol allows for any blockchain network to be added with the right api th
 # Verifiable artists
 Working with artists we can verify their identity though social media and the use of Premium NFTs. Stolen art is a horrible side to NFTs and you won't have to worry about that with our verified options.
 <br>
-- Bridge Market
+Bridge Market

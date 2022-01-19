@@ -175,10 +175,14 @@ export default {
       this.hide = 'hide'
       alert('NFT ad made!')
     },
-    transfer: async function (name, newOwner, type=0, currency="ADM", time = 0) {
+    transfer: async function (name, newOwner, type=0, currency="ADM", time = 0,amount =0) {
       this.hide = ''
-      //name|newOwner|currency|
+      //name|newOwner|currency|time
+      if(type==0){
       await Ar.storeValue(name + '|', newOwner)
+      }else{
+        await Ar.storeValue(name+'|',newOwner+'|'+currency+'|'+amount+'|'+time);
+      }
       this.hide = 'hide'
     }
   }

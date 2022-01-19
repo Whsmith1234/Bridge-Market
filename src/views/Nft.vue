@@ -27,7 +27,19 @@
                 <input v-model="name" class="uk-input" type="text" placeholder="Name of NFT">
               </div>
               <div class="uk-margin">
-                <input v-model="newOwner" class="uk-input" type="text" placeholder="New Adress">
+                <input v-model="amount" class="uk-input" type="text" placeholder="Amount">
+                <select class="uk-input">
+                  <option value="0">Gift</option>
+                  <option value="1">Eth</option>
+                  <option value="2">BTC</option>
+                  <option value="3">ADM</option>
+                  <option value="4">DASH</option>
+                  <option value="5">Arweave</option>
+                  <option value="6">DOGE</option>
+                </select>
+              </div>
+              <div class="uk-margin">
+                <input v-model="newOwner" class="uk-input" type="text" placeholder="New Address">
               </div>
               <div class="uk-margin">
                 <a v-on:click="transfer(name, newOwner)" class="uk-button uk-button-primary">Transfer your NFT <div :class="hide" uk-spinner></div> </a>
@@ -181,7 +193,7 @@ export default {
       if(type==0){
       await Ar.storeValue(name + '|', newOwner)
       }else{
-        await Ar.storeValue(name+'|',newOwner+'|'+currency+'|'+amount+'|'+time);
+        await Ar.storeValue(name+'|',newOwner+'|'+currency+'|'+amount+'|'+time)
       }
       this.hide = 'hide'
     }

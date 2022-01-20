@@ -196,6 +196,9 @@ export default {
         await Ar.storeValue(name+'|',newOwner+'|'+currency+'|'+amount+'|'+time)
       }
       this.hide = 'hide'
+    },
+    bid: async function(currency, amount, address){
+      Ar.sendMessageB(currentOwner, currency+'|'+amount+'|'+address);
     }
   }
 }

@@ -176,6 +176,9 @@ export default {
    if(currentOwner=== JSON.parse(sessionStorage.adm).address){
      this.mine= '';
    }
+    var data = await Ar.getChatsB(currentOwner);
+    var enc = new TextDecoder();
+    var v = await enc.decode(hexToBytes(data[0].asset.chat.message)).split("|");
   },
    methods: {
     postAd: async function (name, price) {
@@ -198,7 +201,7 @@ export default {
       this.hide = 'hide'
     },
     bid: async function(currency, amount, address){
-      Ar.sendMessageB(currentOwner, currency+'|'+amount+'|'+address);
+      Ar.sendMessageB(this.name, currentOwner, currency+'|'+amount+'|'+address);
     }
   }
 }

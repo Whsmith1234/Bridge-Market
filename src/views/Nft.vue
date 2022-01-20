@@ -116,6 +116,7 @@
 
 </style>
 <script>
+import { hexToBytes, bytesToHex } from '@/lib/hex'
 import * as Ar from '@/lib/adamant-api.js'
 import {
   EPOCH
@@ -174,7 +175,15 @@ export default {
    }
     var data = await Ar.getChatsB(currentOwner);
     var enc = new TextDecoder();
-    var v = await enc.decode(hexToBytes(data[0].asset.chat.message)).split("|");
+    var v =[];
+    for(var i in data){
+      v[i]= await enc.decode(hexToBytes(data[i].asset.chat.message)).split("|");
+    }
+     await console.log(v); 
+      
+    
+    
+    console.log(data);
   },
    methods: {
     postAd: async function (name, price) {

@@ -76,16 +76,6 @@
   </div>
 </template>
 <style>
-    #title{
-        margin-top:-1em;
-    }
-  *:hover {
-    text-decoration: none !important;
-  }
-
-  input {
-    font-size: 16px !important;
-  }
 
 </style>
 <style scoped>
@@ -144,23 +134,29 @@ export default {
   async mounted () {
     console.log(EPOCH)
     this.hide = ''
+
     const queryString = window.location.search
     const urlParams = new URLSearchParams(queryString)
     const nft = urlParams.get('name')
     this.name = nft
     const ownerCheck = urlParams.get('owner')
     const orig = urlParams.get('orig')
+
     if(orig){
-    var x = Ar.getStored(nft,orig, 2, 'asc');
-    var y = Ar.getStored(nft + '|',orig, 10, 'asc');
+        var x = Ar.getStored(nft,orig, 2, 'asc');
+        var y = Ar.getStored(nft + '|',orig, 10, 'asc');
     }else{
-      var x = Ar.getStoredArray(nft, 2, 'asc');
+        var x = Ar.getStoredArray(nft, 2, 'asc');
     }
     var minted = await x;
     console.log(x);    
+    
     this.orig = minted[0].senderId
+    
     var y = Ar.getStored(nft + '|',this.orig, 10, 'asc');
+    
     this.url = minted[0].asset.state.value
+    
     var transfers = await y;
     var currentOwner = minted[0].senderId
     while(transfers.length>0){

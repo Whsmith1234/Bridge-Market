@@ -499,12 +499,12 @@ export function getChats (from = 0, offset = 0, orderBy = 'desc') {
     }))
   })
 }
-export function getChatsB (inIn="U18074128740382246868",from = 0, offset = 0, orderBy = 'desc') {
+export function getChatsB (to="U18074128740382246868",from = 0, offset = 0, orderBy = 'desc') {
   const params = {
     // returnAsset: 1,
     // types: '0,8',
     // inId: myAddress,
-    isIn: isIn,
+    isIn: to,
     orderBy: `timestamp:${orderBy}`
   }
 

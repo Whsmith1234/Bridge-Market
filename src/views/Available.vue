@@ -195,49 +195,6 @@
     </div>
   </div>
 </template>
-<style>
-a{
-  text-decoration-color: none !important;
-  color:black;
-}
-nav {
-  background-color: white !important;
-}
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin: 4rem 1vw;
-  padding: 0;
-  list-style-type: none;
-}
-.card {
-  position: relative;
-  display: block;
-  height: 100%;
-  max-height:50vh !important;
-  border-radius: calc(var(--curve) * 1px);
-  overflow: hidden;
-  text-decoration: none;
-}
-
-input {
-  font-size: 16px !important;
-}
-nav {
-  position: fixed !important;
-  top: 0px;
-  left: 0px;
-  width: 100vw;
-  z-index: 1000;
-}
-.hide {
-  display: none;
-}
-body {
-  overflow-x: hidden !important;
-}
-</style>
 <style scoped>
 #home {
   margin-top: 20px;

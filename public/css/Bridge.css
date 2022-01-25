@@ -34,7 +34,7 @@ a{
     z-index: 1000;
   }
   .hide {
-    display: none;
+    display: none !important;
   }
   body {
     overflow-x: hidden !important;

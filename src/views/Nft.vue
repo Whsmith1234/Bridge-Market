@@ -64,6 +64,10 @@
        <hr/> {{transfer}}
     </div>
      <hr/>
+                    <a class = "btn-main" uk-toggle="target: #Bid" aria-expanded="false">
+                      Bid
+                    </a>
+                     &nbsp;
                     <a :class = "mine" class = "btn-main" uk-toggle="target: #postAd" aria-expanded="false">
                       Post Ad
                     </a>

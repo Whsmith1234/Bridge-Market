@@ -18,6 +18,33 @@
           </form>
         </div>
       </div>
+      <div id="bid" uk-modal="" class="uk-modal" style="" tabindex="0">
+        <div class="uk-modal-dialog uk-modal-body">
+          <h2 class="uk-modal-title">Post a Bid</h2>
+          <form>
+            <fieldset class="uk-fieldset">
+              <div class="uk-margin">
+                <input v-model="name" class="uk-input" type="text" placeholder="Name of NFT">
+              </div>
+              <div class="uk-margin">
+                <input v-model="amount" class="uk-input" type="text" placeholder="Amount">
+                <select class="uk-input">
+                  <option value="Gift">Gift</option>
+                  <option value="Eth">Eth</option>
+                  <option value="BTC">BTC</option>
+                  <option value="ADM">ADM</option>
+                  <option value="DASH">DASH</option>
+                  <option value="Arweave">Arweave</option>
+                  <option value="DOGE">DOGE</option>
+                </select>
+              </div>
+              <div class="uk-margin">
+                <a v-on:click="bid(name, price)" class="uk-button uk-button-primary">Bid<div :class="hide" uk-spinner></div> </a>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
       <div id="transfer" uk-modal="" class="uk-modal" style="" tabindex="0">
         <div class="uk-modal-dialog uk-modal-body">
           <h2 class="uk-modal-title">Transfer your NFT</h2>
@@ -64,7 +91,7 @@
        <hr/> {{transfer}}
     </div>
      <hr/>
-                    <a class = "btn-main" uk-toggle="target: #Bid" aria-expanded="false">
+                    <a class = "btn-main" uk-toggle="target: #bid" aria-expanded="false">
                       Bid
                     </a>
                      &nbsp;

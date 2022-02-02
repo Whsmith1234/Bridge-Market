@@ -56,13 +56,13 @@
               <div class="uk-margin">
                 <input v-model="amount" class="uk-input" type="text" placeholder="Amount">
                 <select class="uk-input">
-                  <option value="0">Gift</option>
-                  <option value="1">Eth</option>
-                  <option value="2">BTC</option>
-                  <option value="3">ADM</option>
-                  <option value="4">DASH</option>
-                  <option value="5">Arweave</option>
-                  <option value="6">DOGE</option>
+                  <option value="Gift">Gift</option>
+                  <option value="Eth">Eth</option>
+                  <option value="BTC">BTC</option>
+                  <option value="ADM">ADM</option>
+                  <option value="DASH">DASH</option>
+                  <option value="Arweave">Arweave</option>
+                  <option value="DOGE">DOGE</option>
                 </select>
               </div>
               <div class="uk-margin">
@@ -192,8 +192,43 @@ export default {
     var transfers = await y;
     var currentOwner = minted[0].senderId
     while(transfers.length>0){
-      this.transfers.push("Transfered to " + transfers[0].asset.state.value)
-      transfers = await  Ar.getStored(nft + '|',transfers[0].asset.state.value, 10, 'asc',0,transfers[0].height);
+      if(transfers[0].asset.state.value.split("|").length<2){ //If the transfer is a gift
+        this.transfers.push("Transfered to " + transfers[0].asset.state.value)
+        transfers = await  Ar.getStored(nft + '|',transfers[0].asset.state.value, 10, 'asc',0,transfers[0].height);
+      }else{
+        if(transfers[0].asset.state.value.split("|").length==5){
+          var currentTransfer = transfers[0].asset.state.value.split("|");
+          var currency = currentTransfer[2];
+          var amount = currentTransfer[3];
+          var time = currentTransfer[4];
+          var owner = currentOwner;
+          var newOwner = currentTransfer[1]; 
+          var name = currentTransfer[0];
+          var txId = await  Ar.getStored(nft + '|',transfers[0].asset.state.value, 10, 'asc',0,transfers[0].height);
+          var tx;
+          switch(currency){
+            case "ADM":
+              tx = await checkAdamant(amount, time, owner, newOwner, name, txId); 
+            break;
+            case "BTC":
+              tx = await checkBTC(amount, time, owner, newOwner, name, txId); 
+            break;
+            case "Arweave":
+              tx = await checkArweave(amount, time, owner, newOwner, name, txId); 
+            break;
+            case "Eth":
+              tx = await checkEth(amount, time, owner, newOwner, name, txId); 
+            break;
+            case "Dash":
+              tx = await checkDash(amount, time, owner, newOwner, name, txId); 
+            break;
+            case "DOGE":
+              tx = await checkDOGE(amount, time, owner, newOwner, name, txId); 
+            break;
+          }
+        }
+      }
+      
     }
     this.hide = 'hide'
     if (ownerCheck === currentOwner) {
@@ -230,7 +265,7 @@ export default {
       this.hide = ''
       //name|newOwner|currency|time
       if(type==0){
-      await Ar.storeValue(name + '|', newOwner)
+        await Ar.storeValue(name + '|', newOwner)
       }else{
         await Ar.storeValue(name+'|',newOwner+'|'+currency+'|'+amount+'|'+time)
       }

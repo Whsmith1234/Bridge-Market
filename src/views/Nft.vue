@@ -230,6 +230,7 @@ export default {
       }
       
     }
+
     this.hide = 'hide'
     if (ownerCheck === currentOwner) {
      this.transfers.push('Verification complete this is the correct owner')
@@ -245,7 +246,10 @@ export default {
     for(var i in data){
       v[i]= await enc.decode(hexToBytes(data[i].asset.chat.message)).split("|");
     }
-     await console.log(v); 
+     for(var i =0;i<v.length;i++){
+       this.transfers.push(v[i]);
+     }
+      
       
     
     

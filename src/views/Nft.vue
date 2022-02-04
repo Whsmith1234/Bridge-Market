@@ -28,7 +28,7 @@
               </div>
               <div class="uk-margin">
                 <input v-model="amount" class="uk-input" type="text" placeholder="Amount">
-                <select class="uk-input">
+                <select v-model ="currency" class="uk-input">
                   <option value="Gift">Gift</option>
                   <option value="Eth">Eth</option>
                   <option value="BTC">BTC</option>
@@ -39,7 +39,7 @@
                 </select>
               </div>
               <div class="uk-margin">
-                <a v-on:click="bid(name, price)" class="uk-button uk-button-primary">Bid<div :class="hide" uk-spinner></div> </a>
+                <a v-on:click="bid(amount,currency)" class="uk-button uk-button-primary">Bid<div :class="hide" uk-spinner></div> </a>
               </div>
             </fieldset>
           </form>
@@ -54,8 +54,8 @@
                 <input v-model="name" class="uk-input" type="text" placeholder="Name of NFT">
               </div>
               <div class="uk-margin">
-                <input v-model="amount" class="uk-input" type="text" placeholder="Amount">
-                <select class="uk-input">
+                <input v-model="price" class="uk-input" type="text" placeholder="Amount">
+                <select v-model="currency" class="uk-input">
                   <option value="Gift">Gift</option>
                   <option value="Eth">Eth</option>
                   <option value="BTC">BTC</option>
@@ -161,7 +161,10 @@ export default {
     name: '',
     url: '',
     orig: '',
-    transfers: []
+    transfers: [],
+    price : 0,
+    currency: "Adm",
+    currentOwner : ""
   }),
   async mounted () {
     console.log(EPOCH)
@@ -191,6 +194,7 @@ export default {
     
     var transfers = await y;
     var currentOwner = minted[0].senderId
+    
     while(transfers.length>0){
       if(transfers[0].asset.state.value.split("|").length<2){ //If the transfer is a gift
         this.transfers.push("Transfered to " + transfers[0].asset.state.value)
@@ -240,6 +244,7 @@ export default {
    if(currentOwner=== JSON.parse(sessionStorage.adm).address){
      this.mine= '';
    }
+    this.currentOwner = currentOwner;
     var data = await Ar.getChatsB(currentOwner);
     var enc = new TextDecoder();
     var v =[];
@@ -249,10 +254,6 @@ export default {
      for(var i =0;i<v.length;i++){
        this.transfers.push(v[i]);
      }
-      
-      
-    
-    
     console.log(data);
   },
    methods: {
@@ -275,8 +276,11 @@ export default {
       }
       this.hide = 'hide'
     },
-    bid: async function(currency, amount, address){
-      Ar.sendMessageB(this.name, currentOwner, currency+'|'+amount+'|'+address);
+    bid: async function(amount,currency){
+      console.log("bid")
+      var h =await Ar.sendMessageB({to:this.currentOwner, message: this.name+'@|'+currency+'|'+amount+'|'+ JSON.parse(sessionStorage.adm).address});
+      console.log(h)
+      console.log(this.currentOwner);
     }
   }
 }

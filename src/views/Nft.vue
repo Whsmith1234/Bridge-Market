@@ -90,6 +90,11 @@
    <div v-for="transfer in transfers" :key="transfer">
        <hr/> {{transfer}}
     </div>
+    <div v-for="bid in bids" :key="bid">
+       <hr/><a v-on:click="inputBid(bid)" :class = "mine" style= "background-color: rgb(13, 12, 34,0.3); !important" class = "btn-main" uk-toggle="target: #transfer" aria-expanded="false">
+                      {{bid[1]}} &nbsp; {{bid[2]}}
+       </a> {{bid}}
+    </div>
      <hr/>
                     <a class = "btn-main" uk-toggle="target: #bid" aria-expanded="false">
                       Bid
@@ -162,6 +167,7 @@ export default {
     url: '',
     orig: '',
     transfers: [],
+    bids: [],
     price : 0,
     currency: "Adm",
     currentOwner : ""
@@ -252,7 +258,7 @@ export default {
       v[i]= await enc.decode(hexToBytes(data[i].asset.chat.message)).split("|");
     }
      for(var i =0;i<v.length;i++){
-       this.transfers.push(v[i]);
+       this.bids.push(v[i]);
      }
     console.log(data);
   },
@@ -281,6 +287,11 @@ export default {
       var h =await Ar.sendMessageB({to:this.currentOwner, message: this.name+'@|'+currency+'|'+amount+'|'+ JSON.parse(sessionStorage.adm).address});
       console.log(h)
       console.log(this.currentOwner);
+    },
+    inputBid: function(bid){
+      this.amount = bid[3]
+      this.newOwner = bid[2]
+      this.currency = bid[4]
     }
   }
 }

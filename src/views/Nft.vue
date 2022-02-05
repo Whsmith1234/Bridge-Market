@@ -170,7 +170,8 @@ export default {
     bids: [],
     price : 0,
     currency: "Adm",
-    currentOwner : ""
+    currentOwner : "",
+    newOwner: ""
   }),
   async mounted () {
     console.log(EPOCH)
@@ -289,9 +290,9 @@ export default {
       console.log(this.currentOwner);
     },
     inputBid: function(bid){
-      this.amount = bid[3]
-      this.newOwner = bid[2]
-      this.currency = bid[4]
+      this.price = bid[2]
+      this.newOwner = bid[3]
+      this.currency = bid[1]
     }
   }
 }

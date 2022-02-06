@@ -90,10 +90,10 @@
    <div v-for="transfer in transfers" :key="transfer">
        <hr/> {{transfer}}
     </div>
-    <div v-for="bid in bids" :key="bid">
-       <hr/><a v-on:click="inputBid(bid)" :class = "mine" style= "background-color: rgb(13, 12, 34,0.3); !important" class = "btn-main" uk-toggle="target: #transfer" aria-expanded="false">
-                      {{bid[1]}} &nbsp; {{bid[2]}}
-       </a> {{bid}}
+    <div style= "margin-top:10px;" :class = "mine" v-for="bid in bids" :key="bid">
+       <a v-on:click="inputBid(bid)" :class = "mine" style= "margin-top:100px; background-color: rgb(13, 12, 34,0.3); !important" class = "btn-main" uk-toggle="target: #transfer" aria-expanded="false">
+                      {{bid[1]}} &nbsp; {{bid[2]}} &nbsp; {{bid[3]}}
+       </a>
     </div>
      <hr/>
                     <a class = "btn-main" uk-toggle="target: #bid" aria-expanded="false">

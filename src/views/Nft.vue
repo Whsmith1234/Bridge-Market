@@ -307,14 +307,11 @@ export default {
       this.currency = bid[1]
       try{
         if(this.length>0){
-          console.log("ISSSSSSSSSSSSSSSSSSSSSSSSSSSSSS")
           this.fromAddress = bid[4]
         }else{
           this.fromAddress = await  Ar.getStored(bid[1].toLowerCase()+":address",bid[3], 1, 'desc');
-          console.log(this.from);
         }}
         catch{
-        console.log("UPPPPPPPPPPPPPPPPPPPPPP");
         this.fromAddress = await  Ar.getStored(bid[1].toLowerCase()+":address",bid[3], 1, 'desc');
         }
         this.toAddress = await  Ar.getStored(bid[1].toLowerCase()+":address",JSON.parse(sessionStorage.adm).address, 1, 'desc');

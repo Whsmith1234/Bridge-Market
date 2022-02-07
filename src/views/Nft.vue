@@ -69,6 +69,14 @@
                 <input v-model="newOwner" class="uk-input" type="text" placeholder="New Address">
               </div>
               <div class="uk-margin">
+                Their wallet
+                <input v-model="fromAddress" class="uk-input" type="text" placeholder="The wallet they are paying with">
+              </div>
+              <div class="uk-margin">
+                Your wallet
+                <input v-model="toAddress" class="uk-input" type="text" placeholder="The wallet you would like the payment to go to">
+              </div>
+              <div class="uk-margin">
                 <a v-on:click="transfer(name, newOwner)" class="uk-button uk-button-primary">Transfer your NFT <div :class="hide" uk-spinner></div> </a>
               </div>
             </fieldset>
@@ -171,7 +179,9 @@ export default {
     price : 0,
     currency: "Adm",
     currentOwner : "",
-    newOwner: ""
+    newOwner: "",
+    fromAddress: "",
+    toAddress: ""
   }),
   async mounted () {
     console.log(EPOCH)
@@ -279,7 +289,7 @@ export default {
       if(type==0){
         await Ar.storeValue(name + '|', newOwner)
       }else{
-        await Ar.storeValue(name+'|',newOwner+'|'+currency+'|'+amount+'|'+time)
+        await Ar.storeValue(name+'|',newOwner+'|'+currency+'|'+amount+'|'+time+'|'+this.toAddress+'|'+this.fromAddress)
       }
       this.hide = 'hide'
     },
@@ -293,6 +303,8 @@ export default {
       this.price = bid[2]
       this.newOwner = bid[3]
       this.currency = bid[1]
+      this.to = bid[4]
+      this.from = bid[5]
     }
   }
 }

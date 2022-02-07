@@ -27,7 +27,7 @@
                 <input v-model="name" class="uk-input" type="text" placeholder="Name of NFT">
               </div>
               <div class="uk-margin">
-                <input v-model="amount" class="uk-input" type="text" placeholder="Amount">
+                <input v-model="price" class="uk-input" type="text" placeholder="Amount">
                 <select v-model ="currency" class="uk-input">
                   <option value="Gift">Gift</option>
                   <option value="Eth">Eth</option>
@@ -39,7 +39,7 @@
                 </select>
               </div>
               <div class="uk-margin">
-                <a v-on:click="bid(amount,currency)" class="uk-button uk-button-primary">Bid<div :class="hide" uk-spinner></div> </a>
+                <a v-on:click="bid(price,currency)" class="uk-button uk-button-primary">Bid<div :class="hide" uk-spinner></div> </a>
               </div>
             </fieldset>
           </form>
@@ -300,19 +300,29 @@ export default {
       console.log(h)
       console.log(this.currentOwner);
     },
-    inputBid: function(bid){
+    inputBid: async function(bid){
+      console.log("WHATTTTTTTTTTTTTTT");
       this.price = bid[2]
       this.newOwner = bid[3]
       this.currency = bid[1]
-      if(this.from){
-        this.from = bid[4]
-      }else{
-        this.from = bid[3]
+      try{
+        if(this.length>0){
+          console.log("ISSSSSSSSSSSSSSSSSSSSSSSSSSSSSS")
+          this.fromAddress = bid[4]
+        }else{
+          this.fromAddress = await  Ar.getStored(bid[1].toLowerCase()+":address",bid[3], 1, 'desc');
+          console.log(this.from);
+        }}
+        catch{
+        console.log("UPPPPPPPPPPPPPPPPPPPPPP");
+        this.fromAddress = await  Ar.getStored(bid[1].toLowerCase()+":address",bid[3], 1, 'desc');
+        }
+        this.toAddress = await  Ar.getStored(bid[1].toLowerCase()+":address",JSON.parse(sessionStorage.adm).address, 1, 'desc');
       }
       
     }
   }
-}
+
 /*
 Buy now links to ?address=U14236667426471084862&label=John%20Doe&amount=1.01&message=Hi%20there
 */

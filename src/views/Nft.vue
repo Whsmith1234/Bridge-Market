@@ -115,6 +115,7 @@
                     <a :class = "mine" style= "background-color: rgb(13, 12, 34,0.3); !important" class = "btn-main" uk-toggle="target: #transfer" aria-expanded="false">
                       Transfer your NFT
                     </a>
+                    <hr/>
     </div>
                      
   </div>
@@ -289,7 +290,7 @@ export default {
       if(type==0){
         await Ar.storeValue(name + '|', newOwner)
       }else{
-        await Ar.storeValue(name+'|',newOwner+'|'+currency+'|'+amount+'|'+time+'|'+this.toAddress+'|'+this.fromAddress)
+        await Ar.storeValue(name+'|',newOwner+'|'+currency+'|'+amount+'|'+time+'|'+this.fromAddress+'|'+this.toAddress)
       }
       this.hide = 'hide'
     },
@@ -303,8 +304,12 @@ export default {
       this.price = bid[2]
       this.newOwner = bid[3]
       this.currency = bid[1]
-      this.to = bid[4]
-      this.from = bid[5]
+      if(this.from){
+        this.from = bid[4]
+      }else{
+        this.from = bid[3]
+      }
+      
     }
   }
 }

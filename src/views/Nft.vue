@@ -88,7 +88,7 @@
    <div id="home">
    <h2 id = "title"> Owners of: {{name}} </h2>
    <a :href="url">
-   <img :src ="url"/>
+     <img :src = "url"/>
    </a>
    <hr/>
    Minted By {{orig}}
@@ -98,7 +98,8 @@
    <div v-for="transfer in transfers" :key="transfer">
        <hr/> {{transfer}}
     </div>
-    <div style= "margin-top:10px;" :class = "mine" v-for="bid in bids" :key="bid">
+    <h3>Bids</h3>
+    <div style= "margin-top:10px;" v-for="bid in bids" :key="bid">
        <a v-on:click="inputBid(bid)" :class = "mine" style= "margin-top:100px; background-color: rgb(13, 12, 34,0.3); !important" class = "btn-main" uk-toggle="target: #transfer" aria-expanded="false">
                       {{bid[1]}} &nbsp; {{bid[2]}} &nbsp; {{bid[3]}}
        </a>
@@ -169,7 +170,7 @@ import {
 import BridgeNav from '@/components/BridgeNav.vue'
 export default {
   components: { BridgeNav },
-  data: () => ({
+    data: () => ({
     hide: 'hide',
     mine: 'hide',
     name: '',
@@ -270,7 +271,9 @@ export default {
       v[i]= await enc.decode(hexToBytes(data[i].asset.chat.message)).split("|");
     }
      for(var i =0;i<v.length;i++){
-       this.bids.push(v[i]);
+       if(v[i][0]===(this.name+"@")){
+        this.bids.push(v[i]);
+       }
      }
     console.log(data);
   },

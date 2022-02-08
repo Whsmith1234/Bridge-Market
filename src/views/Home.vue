@@ -21,7 +21,10 @@
             v-model="currentWallet"
             grow
             show-arrows
-          >
+          > <v-tab
+            >
+              <div><img width = "30 px" src = "https://cryptologos.cc/logos/arweave-ar-logo.png"/><div> Ar </div> </div>
+            </v-tab>
             <v-tab
               v-for="wallet in wallets"
               :key="wallet.cryptoCurrency"

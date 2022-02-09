@@ -65,7 +65,7 @@
                       animation-delay: 1.25s;
                       animation-name: fadeInUp;
                     "
-                    >Learn More</a
+                    >Sign Up/Sign In</a
                   >
                   <div class="mb-sm-30" style="background-size: cover"></div>
                 </div>
@@ -721,7 +721,6 @@
                   <li><a href="/available">All NFTs</a></li>
                   <li><a href="/available">Art</a></li>
                   <li><a href="/available">Music</a></li>
-                  <li><a href="/available">Domain Names</a></li>
                   <li><a href="/available">Virtual World</a></li>
                   <li><a href="/available">Collectibles</a></li>
                 </ul>

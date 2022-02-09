@@ -163,7 +163,6 @@
       <div style="margin-top: 10px" v-for="bid in bids" :key="bid">
         <a
           v-on:click="inputBid(bid)"
-          :class="mine"
           style="margin-top:100px; background-color: rgb(13, 12, 34,0.3); !important"
           class="btn-main"
           uk-toggle="target: #transfer"

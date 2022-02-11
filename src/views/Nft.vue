@@ -246,11 +246,18 @@ async function checkAdamant(
                 time,
                 owner,
                 newOwner,
-                name,
                 txId)
 {
-  var now = Date.now()/1000;
-  var tx = await  Ar.getTransaction(txId)
+  txId= '1822689359828747687';
+  var f = ''+txId+'';
+  var tx = await  Ar.getTransaction(f)
+  console.log(tx);
+  var am = amount*100000000;
+  if(tx.block_timestamp>time||tx.amount<am||tx.senderId!=newOwner||tx.recipientId!=owner){
+    return false;
+  }else{
+    return true;
+  }
 }
 export default {
   components: { BridgeNav },
@@ -270,6 +277,7 @@ export default {
     toAddress: "",
   }),
   async mounted() {
+    checkAdamant(1,1000,1,1,'1822689359828747687')
     console.log(EPOCH);
     this.hide = "";
 

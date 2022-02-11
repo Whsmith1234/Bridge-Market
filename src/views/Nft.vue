@@ -329,7 +329,28 @@ export default {
             var amount = transfer[3];
             var time = transfers[0].block_timestamp+3600;
             if(Date.now()/1000<transfers[0].block_timestamp+3600+EPOCH){
-              this.transfers.push("This NFT is currently being transferred sorry");
+              var confirmation = await Ar.getStored(
+                nft + "|confirm",
+                transfers[0].senderId,
+                10,
+                "asc",
+                0,
+                transfers[0].height+1
+              );
+              if(confirmation.length>0){
+                this.transfers.push("Transfered to " + transfers[0].asset.state.value+" For "+amount+" "+currency);
+                      transfers = await Ar.getStored(
+                        nft + "|",
+                        transfers[0].asset.state.value,
+                        10,
+                        "asc",
+                        0,
+                        transfers[0].height+1
+                      );
+                  currentOwner =  transfers[0].asset.state.value;
+              }else{
+              this.transfers.push("This NFT is currently being transferred sorry. If you are yet to pay submit a payment reciept. If you are the owner speed up the process by confirming.");
+              }
             }
             else{
               if(txid.length>0){

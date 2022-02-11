@@ -831,7 +831,6 @@
                   </div>
                 </form>
                 <div class="spacer-10" style="background-size: cover"></div>
-                <small>Your email is safe with us. We don't spam</small>
               </div>
             </div>
           </div>

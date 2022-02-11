@@ -241,6 +241,17 @@ import { hexToBytes, bytesToHex } from "@/lib/hex";
 import * as Ar from "@/lib/adamant-api.js";
 import { EPOCH } from "@/lib/constants.js";
 import BridgeNav from "@/components/BridgeNav.vue";
+async function checkAdamant(
+                amount,
+                time,
+                owner,
+                newOwner,
+                name,
+                txId)
+{
+  var now = Date.now()/1000;
+  var tx = await  Ar.getTransaction(txId)
+}
 export default {
   components: { BridgeNav },
   data: () => ({
@@ -288,7 +299,8 @@ export default {
     var currentOwner = minted[0].senderId;
 
     while (transfers.length > 0) {
-      if (transfers[0].asset.state.value.split("|").length < 2) {
+      var transfer = transfers[0].asset.state.value.split("|");
+      if (transfer.length < 2) {
         //If the transfer is a gift
         this.transfers.push("Transfered to " + transfers[0].asset.state.value);
         transfers = await Ar.getStored(
@@ -297,62 +309,55 @@ export default {
           10,
           "asc",
           0,
-          transfers[0].height
+          transfers[0].height+1
         );
+        currentOwner =  transfers[0].asset.state.value;
       } else {
-        if (transfers[0].asset.state.value.split("|").length == 5) {
-          var currentTransfer = transfers[0].asset.state.value.split("|");
-          var currency = currentTransfer[2];
-          var amount = currentTransfer[3];
-          var time = currentTransfer[4];
-          var owner = currentOwner;
-          var newOwner = currentTransfer[1];
-          var name = currentTransfer[0];
-          var txId = await Ar.getStored(
-            nft + "|",
-            transfers[0].asset.state.value,
-            10,
+          if (transfer.length > 1) {
+            var txid = await Ar.getStored(
+            nft + "|payment",
+            transfer[0],
+            1,
             "asc",
-            0,
-            transfers[0].height
+            2,
+            transfers[0].height+1
           );
-          var tx;
-          switch (currency) {
-            case "ADM":
-              tx = await checkAdamant(
-                amount,
-                time,
-                owner,
-                newOwner,
-                name,
-                txId
+            var from = transfers[0].senderId;
+            var paymentTo = transfer[5];
+            var paymentFrom = trasfer[4];
+            var currency = transfer[2];
+            var amount = transfer[3];
+            var time = transfers[0].block_timestamp+3600;
+            if(Date.now()/1000<transfers[0].block_timestamp+3600+EPOCH){
+              this.transfers.push("This NFT is currently being transferred sorry")
+            }
+            else{
+              if(txid[0].block_timestamp>time){
+                transfers = await Ar.getStored(
+                nft + "|",
+                transfers[0].senderId,
+                10,
+                "asc",
+                0,
+                transfers[0].height+1
               );
-              break;
-            case "BTC":
-              tx = await checkBTC(amount, time, owner, newOwner, name, txId);
-              break;
-            case "Arweave":
-              tx = await checkArweave(
-                amount,
-                time,
-                owner,
-                newOwner,
-                name,
-                txId
-              );
-              break;
-            case "Eth":
-              tx = await checkEth(amount, time, owner, newOwner, name, txId);
-              break;
-            case "Dash":
-              tx = await checkDash(amount, time, owner, newOwner, name, txId);
-              break;
-            case "DOGE":
-              tx = await checkDOGE(amount, time, owner, newOwner, name, txId);
-              break;
+              }else{
+                if(TransactionSucess()){
+                  this.transfers.push("Transfered to " + transfers[0].asset.state.value+" For "+amount+" "+currency);
+                    transfers = await Ar.getStored(
+                      nft + "|",
+                      transfers[0].asset.state.value,
+                      10,
+                      "asc",
+                      0,
+                      transfers[0].height+1
+                    );
+                currentOwner =  transfers[0].asset.state.value;
+                }
+              }
+            }
           }
         }
-      }
     }
 
     this.hide = "hide";
@@ -404,7 +409,7 @@ export default {
       newOwner,
       type = 0,
       currency = "ADM",
-      time = 0,
+      time = 60,
       amount = 0
     ) {
       this.hide = "";
@@ -419,8 +424,6 @@ export default {
             currency +
             "|" +
             amount +
-            "|" +
-            time +
             "|" +
             this.fromAddress +
             "|" +
@@ -446,7 +449,6 @@ export default {
       console.log(this.currentOwner);
     },
     inputBid: async function (bid) {
-      console.log("WHATTTTTTTTTTTTTTT");
       this.price = bid[2];
       this.newOwner = bid[3];
       this.currency = bid[1];

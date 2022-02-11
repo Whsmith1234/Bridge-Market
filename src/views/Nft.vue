@@ -329,32 +329,32 @@ export default {
             var amount = transfer[3];
             var time = transfers[0].block_timestamp+3600;
             if(Date.now()/1000<transfers[0].block_timestamp+3600+EPOCH){
-              this.transfers.push("This NFT is currently being transferred sorry")
+              this.transfers.push("This NFT is currently being transferred sorry");
             }
             else{
               if(txid.length>0){
-              if(txid[0].block_timestamp>time){
-                transfers = await Ar.getStored(
-                nft + "|",
-                transfers[0].senderId,
-                10,
-                "asc",
-                0,
-                transfers[0].height+1
-              );
-              }else{
-                if(TransactionSucess()){
-                  this.transfers.push("Transfered to " + transfers[0].asset.state.value+" For "+amount+" "+currency);
-                    transfers = await Ar.getStored(
-                      nft + "|",
-                      transfers[0].asset.state.value,
-                      10,
-                      "asc",
-                      0,
-                      transfers[0].height+1
-                    );
-                currentOwner =  transfers[0].asset.state.value;
-                }
+                if(txid[0].block_timestamp>time){
+                  transfers = await Ar.getStored(
+                  nft + "|",
+                  transfers[0].senderId,
+                  10,
+                  "asc",
+                  0,
+                  transfers[0].height+1
+                );
+                }else{
+                  if(TransactionSucess(paymentTo,paymentFrom,currency,amount,time)){
+                    this.transfers.push("Transfered to " + transfers[0].asset.state.value+" For "+amount+" "+currency);
+                      transfers = await Ar.getStored(
+                        nft + "|",
+                        transfers[0].asset.state.value,
+                        10,
+                        "asc",
+                        0,
+                        transfers[0].height+1
+                      );
+                  currentOwner =  transfers[0].asset.state.value;
+                  }
               }
             }else{
               transfers = await Ar.getStored(

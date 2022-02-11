@@ -332,6 +332,7 @@ export default {
               this.transfers.push("This NFT is currently being transferred sorry")
             }
             else{
+              if(txid.length>0){
               if(txid[0].block_timestamp>time){
                 transfers = await Ar.getStored(
                 nft + "|",
@@ -355,6 +356,16 @@ export default {
                 currentOwner =  transfers[0].asset.state.value;
                 }
               }
+            }else{
+              transfers = await Ar.getStored(
+                nft + "|",
+                transfers[0].senderId,
+                10,
+                "asc",
+                0,
+                transfers[0].height+1
+              );
+            }
             }
           }
         }

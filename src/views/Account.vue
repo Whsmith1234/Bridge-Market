@@ -740,12 +740,12 @@
                   </li>
                   <li><a href="https://arweave.org">Partners</a></li>
                   <li>
-                    <a href="https://github.com/Whsmith1234/Bridge-Market"
+                    <a href="https://discord.gg/a5KSaNQzt"
                       >Suggestions</a
                     >
                   </li>
                   <li>
-                    <a href="https://github.com/Whsmith1234/Bridge-Market"
+                    <a href="https://discord.gg/a5KSaNQz"
                       >Discord</a
                     >
                   </li>

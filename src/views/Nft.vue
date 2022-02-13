@@ -532,14 +532,28 @@ export default {
                 newOwner,
                 txId)
       {
-         this.$store.dispatch('eth' + '/updateTransaction', { hash: txId, force: true, updateOnly: true });
-         console.log("hey")
-            await sleep(2000);
-            console.log("hey");
+            this.$store.dispatch('eth' + '/updateTransaction', { hash: txId, force: true, updateOnly: true });
+            await sleep(3000);
             var tx = sessionStorage.transaction;
-            console.log(tx);
             tx = JSON.parse(tx);
-            console.log(tx.amount);
+            if(tx.timestamp>time||tx.amount<amount||tx.senderId!=newOwner||tx.recipientId!=owner){
+                return false;
+            }else{
+                return true;
+            }
+         },
+    checkBitcoin: async function(
+                currency,
+                amount,
+                time,
+                owner,
+                newOwner,
+                txId)
+      {
+            this.$store.dispatch('btc' + '/updateTransaction', { hash: txId, force: true, updateOnly: true });
+            await sleep(3000);
+            var tx = sessionStorage.transaction;
+            tx = JSON.parse(tx);
             if(tx.timestamp>time||tx.amount<amount||tx.senderId!=newOwner||tx.recipientId!=owner){
                 return false;
             }else{

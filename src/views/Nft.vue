@@ -578,7 +578,18 @@ export default {
                 return false;
             }else{
               for(var i in tx.vin){
-
+                if(tx.vin[i].parseAddress===newOwner){
+                  if(amount>tx.vin[i].amount){
+                    return false;
+                  }
+                }
+              }
+              for(var i in tx.vout){
+                 if(tx.vout[i].parseAddress===owner){
+                  if(amount>tx.vout[i].amount){
+                    return false;
+                  }
+                }
               }
                 return true;
             }

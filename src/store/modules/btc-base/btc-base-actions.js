@@ -157,7 +157,6 @@ function createActions (options) {
       try {
         tx = await api.getTransaction(payload.hash)
       } catch (e) { }
-      console.log(tx);
       let retry = false
       let retryTimeout = 0
       const attempt = payload.attempt || 0

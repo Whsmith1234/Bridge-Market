@@ -189,7 +189,7 @@ export default function createActions (config) {
           direction: payload.direction
         }])
       }
-
+      console.log(context);
       const key = 'transaction:' + payload.hash
       const supplier = () => api.getTransaction.request(payload.hash, (err, tx) => {
         if (!err && tx && tx.input) {
@@ -202,17 +202,23 @@ export default function createActions (config) {
               ...transaction,
               status
             }])
-            console.log(transaction);
+            
             
             // Fetch receipt details: status and actual gas consumption
             const { attempt, ...receiptPayload } = payload
             context.dispatch('getTransactionReceipt', receiptPayload)
+            
+            
+            var f  = context.state.transactions[payload.hash];
+            transaction.timestamp=f.timestamp;
+            sessionStorage.setItem("transaction",JSON.stringify(transaction));
+            console.log(f);
             // Now we know that the transaction has been registered by the ETH network.
             // Nothing else to do here, let's proceed to checking its status (see getTransactionReceipt)
             return
           }
         }
-
+        
         const attempt = payload.attempt || 0
         const retryCount = tf.getPendingTxRetryCount(payload.timestamp || (existing && existing.timestamp), context.state.crypto)
         const retry = attempt < retryCount

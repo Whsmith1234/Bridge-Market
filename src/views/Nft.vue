@@ -259,6 +259,12 @@ async function checkAdamant(
     return true;
   }
 }
+sessionStorage.clear();
+function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+   }
+
+
 export default {
   components: { BridgeNav },
   data: () => ({
@@ -277,6 +283,7 @@ export default {
     toAddress: "",
   }),
   async mounted() {
+    await this.checkEth(1,2,2,2,'0x0157d5fe026fccb2db0b33df45e41e18556f4fb03acbc2bb33eb3840a977aff6')
     checkAdamant(1,1000,1,1,'1822689359828747687')
     console.log(EPOCH);
     this.hide = "";
@@ -518,6 +525,27 @@ export default {
         "desc"
       );
     },
+    checkEth: async function(
+                amount,
+                time,
+                owner,
+                newOwner,
+                txId)
+      {
+         this.$store.dispatch('eth' + '/updateTransaction', { hash: txId, force: true, updateOnly: true });
+         console.log("hey")
+            await sleep(2000);
+            console.log("hey");
+            var tx = sessionStorage.transaction;
+            console.log(tx);
+            tx = JSON.parse(tx);
+            console.log(tx.amount);
+            if(tx.timestamp>time||tx.amount<amount||tx.senderId!=newOwner||tx.recipientId!=owner){
+                return false;
+            }else{
+                return true;
+            }
+         }
   },
 };
 

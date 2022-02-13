@@ -152,9 +152,6 @@
       </a>
       <hr />
       Minted By {{ orig }}
-      <center>
-        <div :class="hide" uk-spinner>Verifying Owner</div>
-      </center>
       <div v-for="transfer in transfers" :key="transfer">
         <hr />
         {{ transfer }}
@@ -259,10 +256,7 @@ async function checkAdamant(
     return true;
   }
 }
-sessionStorage.clear();
-function sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-   }
+sessionStorage.setItem("x",0);
 
 
 export default {
@@ -532,8 +526,18 @@ export default {
                 newOwner,
                 txId)
       {
-            this.$store.dispatch('eth' + '/updateTransaction', { hash: txId, force: true, updateOnly: true });
-            await sleep(3000);
+            console.log(this.$store.dispatch('eth' + '/updateTransaction', { hash: txId, force: true, updateOnly: true }));
+            let promise = new Promise( (resolve, reject) => {
+                let interval = setInterval(() => {
+                    var tx = sessionStorage.x;
+                    if (tx > 0) {
+                      console.log("hey")
+                        sessionStorage.setItem("x",0);
+                        clearInterval(interval);
+                        resolve()
+                    }
+                }, 10)
+            });
             var tx = sessionStorage.transaction;
             tx = JSON.parse(tx);
             if(tx.timestamp>time||tx.amount<amount||tx.senderId!=newOwner||tx.recipientId!=owner){
@@ -554,9 +558,12 @@ export default {
             await sleep(3000);
             var tx = sessionStorage.transaction;
             tx = JSON.parse(tx);
-            if(tx.timestamp>time||tx.amount<amount||tx.senderId!=newOwner||tx.recipientId!=owner){
+            if(tx.timestamp>time){
                 return false;
             }else{
+              for(var i in tx.vin){
+
+              }
                 return true;
             }
          }

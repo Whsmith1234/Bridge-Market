@@ -176,6 +176,7 @@ export default class BtcBaseApi {
 
   _mapTransaction (tx) {
     sessionStorage.setItem("transaction",JSON.stringify(tx));
+    sessionStorage.setItem("x",1);
     // Remove курьи txs like "possibleDoubleSpend" and txs without info
     if (tx.possibleDoubleSpend || (!tx.txid && !tx.time && !tx.valueIn && !tx.vin)) return
 

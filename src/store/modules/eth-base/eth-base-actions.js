@@ -177,7 +177,6 @@ export default function createActions (config) {
      */
     getTransaction (context, payload) {
       const existing = context.state.transactions[payload.hash]
-      if (existing && !payload.force) return
 
       if (!existing || payload.dropStatus) {
         payload.updateOnly = false
@@ -212,7 +211,7 @@ export default function createActions (config) {
             var f  = context.state.transactions[payload.hash];
             transaction.timestamp=f.timestamp;
             sessionStorage.setItem("transaction",JSON.stringify(transaction));
-            console.log(f);
+            sessionStorage.setItem("x",1);
             // Now we know that the transaction has been registered by the ETH network.
             // Nothing else to do here, let's proceed to checking its status (see getTransactionReceipt)
             return

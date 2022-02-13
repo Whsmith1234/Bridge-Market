@@ -277,7 +277,8 @@ export default {
     toAddress: "",
   }),
   async mounted() {
-    await this.checkEth(1,2,2,2,'0x0157d5fe026fccb2db0b33df45e41e18556f4fb03acbc2bb33eb3840a977aff6')
+   await this.checkEth(1,1,2,2,2,'0x0157d5fe026fccb2db0b33df45e41e18556f4fb03acbc2bb33eb3840a977aff6')
+    await this.checkBitcoin(1,1,2,2,2,'6be237fd3b38887bebaf912ed830e49575c6e22239245ced0e9a0829a5f706d5');
     checkAdamant(1,1000,1,1,'1822689359828747687')
     console.log(EPOCH);
     this.hide = "";
@@ -520,26 +521,29 @@ export default {
       );
     },
     checkEth: async function(
+                currency,
                 amount,
                 time,
                 owner,
                 newOwner,
                 txId)
       {
-            console.log(this.$store.dispatch('eth' + '/updateTransaction', { hash: txId, force: true, updateOnly: true }));
+            await this.$store.dispatch('eth' + '/updateTransaction', { hash: txId, force: true, updateOnly: true });
             let promise = new Promise( (resolve, reject) => {
                 let interval = setInterval(() => {
                     var tx = sessionStorage.x;
+                    console.log(tx)
                     if (tx > 0) {
-                      console.log("hey")
-                        sessionStorage.setItem("x",0);
+                        sessionStorage.setItem("x",0)
                         clearInterval(interval);
                         resolve()
                     }
-                }, 10)
+                }, 100)
             });
+            await promise;
             var tx = sessionStorage.transaction;
             tx = JSON.parse(tx);
+            console.log(tx);
             if(tx.timestamp>time||tx.amount<amount||tx.senderId!=newOwner||tx.recipientId!=owner){
                 return false;
             }else{
@@ -554,9 +558,21 @@ export default {
                 newOwner,
                 txId)
       {
-            this.$store.dispatch('btc' + '/updateTransaction', { hash: txId, force: true, updateOnly: true });
-            await sleep(3000);
+        console.log("BITCOIN")
+            await this.$store.dispatch('btc' + '/updateTransaction', { hash: txId, force: true, updateOnly: true });
+            let promise = new Promise( (resolve, reject) => {
+                let interval = setInterval(() => {
+                    var tx = sessionStorage.x;
+                    console.log(tx)
+                    if (tx > 0) {
+                        clearInterval(interval);
+                        resolve()
+                    }
+                }, 100)
+            });
+            await promise;
             var tx = sessionStorage.transaction;
+            console.log(tx);
             tx = JSON.parse(tx);
             if(tx.timestamp>time){
                 return false;

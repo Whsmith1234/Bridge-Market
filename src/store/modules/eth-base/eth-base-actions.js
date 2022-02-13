@@ -188,7 +188,6 @@ export default function createActions (config) {
           direction: payload.direction
         }])
       }
-      console.log(context);
       const key = 'transaction:' + payload.hash
       const supplier = () => api.getTransaction.request(payload.hash, (err, tx) => {
         if (!err && tx && tx.input) {

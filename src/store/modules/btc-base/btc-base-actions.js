@@ -138,7 +138,6 @@ function createActions (options) {
     async getTransaction (context, payload) {
       if (!api) return
       if (!payload.hash) return
-
       let existing = context.state.transactions[payload.hash]
       if (existing && !payload.force) return
 
@@ -160,7 +159,6 @@ function createActions (options) {
       let retry = false
       let retryTimeout = 0
       const attempt = payload.attempt || 0
-
       if (tx) {
         context.commit('transactions', [tx])
         // The transaction has been confirmed, we're done here

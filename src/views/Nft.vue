@@ -277,10 +277,6 @@ export default {
     toAddress: "",
   }),
   async mounted() {
-   await this.checkEth(1,1,2,2,2,'0x0157d5fe026fccb2db0b33df45e41e18556f4fb03acbc2bb33eb3840a977aff6')
-    await this.checkBitcoin(1,1,2,2,2,'6be237fd3b38887bebaf912ed830e49575c6e22239245ced0e9a0829a5f706d5');
-    checkAdamant(1,1000,1,1,'1822689359828747687')
-    console.log(EPOCH);
     this.hide = "";
 
     const queryString = window.location.search;
@@ -374,7 +370,15 @@ export default {
                   transfers[0].height+1
                 );
                 }else{
-                  if(TransactionSucess(paymentTo,paymentFrom,currency,amount,time)){
+                  var t =false;
+                  if(currency.toLowerCase()==='eth'){
+                    t = await this.checkEth('eth',amount,time+EPOCH-3600,paymentTo,paymentFrom,txid[0].state.value)
+                  }else if(currency.toLowerCase()==='btc'||currency.toLowerCase()==='dash'||currency.toLowerCase()==='doge'){
+                    t = await this.checkBitcoin(currency.toLowerCase(),amount,time+EPOCH-3600,paymentTo,paymentFrom,txid[0].state.value)
+                  }else if(currency.toLowerCase()=='adm'){
+                    t = await checkAdamant(amount,time,from,transfer[0],txid[0].state.value)
+                  }
+                  if(f){
                     this.transfers.push("Transfered to " + transfers[0].asset.state.value+" For "+amount+" "+currency);
                       transfers = await Ar.getStored(
                         nft + "|",
@@ -574,11 +578,13 @@ export default {
             console.log(tx);
             tx = JSON.parse(tx);
             if(currency==='btc'){
+              var t =0;
               if(tx.timestamp>time){
                   return false;
               }else{
                 for(var i in tx.vin){
                   if(tx.vin[i].prevout.scriptpubkey_address===newOwner){
+                    t++;
                     if(amount>tx.vin[i].prevout.value/100000000){
                       return false;
                     }
@@ -586,19 +592,27 @@ export default {
                 }
                 for(var i in tx.vout){
                   if(tx.vout[i].scriptpubkey_address===owner){
+                    t++;
                     if(amount>tx.vout[i].amount/100000000){
                       return false;
                     }
                   }
                 }
+                if(t>1){
                   return true;
+                }else{
+                  return false;
+                }
+                  
               }
           }else if(currency==='dash'){
+            var t =0;
               if(tx.blocktime>time){
                   return false;
               }else{
                 for(var i in tx.vin){
                   if(tx.vin[i].addr===newOwner){
+                    t++;
                     if(amount>tx.vin[i].value){
                       return false;
                     }
@@ -606,12 +620,17 @@ export default {
                 }
                 for(var i in tx.vout){
                   if(tx.vout[i].scriptPubKey.addresses[0]===owner){
+                    t++;
                     if(amount>tx.vout[i].value){
                       return false;
                     }
                   }
                 }
-                  return true;
+                 if(t>1){
+                    return true;
+                 }else{
+                   return false;
+                 }
               }
           }else if(currency==='doge'){
               if(tx.time>time){
@@ -619,6 +638,7 @@ export default {
               }else{
                 for(var i in tx.vin){
                   if(tx.vin[i].addr===newOwner){
+                    t++;
                     if(amount>tx.vin[i].value){
                       return false;
                     }
@@ -626,12 +646,17 @@ export default {
                 }
                 for(var i in tx.vout){
                   if(tx.vout[i].scriptPubKey.addresses[0]===owner){
+                    t++;
                     if(amount>tx.vout[i].value){
                       return false;
                     }
                   }
                 }
+                if(t>1){
                   return true;
+                }else{
+                  return false;
+                }
               }
           }
       }

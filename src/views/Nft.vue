@@ -208,7 +208,6 @@
         Post Ad
       </a>
       <hr>
-      &nbsp;
       <a
         class="btn-main"
         uk-toggle="target: #payment"
@@ -227,7 +226,6 @@
           Confirm
         </a>
         <hr>
-      &nbsp;
       <a
         :class="mine"
         style="background-color: rgb(13, 12, 34,0.3); !important"

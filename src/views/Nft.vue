@@ -33,6 +33,32 @@
         </form>
       </div>
     </div>
+     <div id="payment" uk-modal="" class="uk-modal" style="" tabindex="0">
+      <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Add Payment txId</h2>
+        <form>
+          <fieldset class="uk-fieldset">
+           
+            <div class="uk-margin">
+              <input
+                v-model="txId"
+                class="uk-input"
+                type="text"
+                placeholder="Price: Ex 3 BTC"
+              />
+            </div>
+            <div class="uk-margin">
+              <a
+                v-on:click="pay(txId)"
+                class="uk-button uk-button-primary"
+                >Pay
+                <div :class="hide" uk-spinner></div>
+              </a>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
     <div id="bid" uk-modal="" class="uk-modal" style="" tabindex="0">
       <div class="uk-modal-dialog uk-modal-body">
         <h2 class="uk-modal-title">Post a Bid</h2>
@@ -181,6 +207,26 @@
       >
         Post Ad
       </a>
+      <hr>
+      &nbsp;
+      <a
+        class="btn-main"
+        uk-toggle="target: #payment"
+        aria-expanded="false"
+      >
+        Input Payment Receipt
+      </a>
+      &nbsp;
+      <a
+          v-on:click="confirm()"
+          style="margin-top:100px; background-color: rgb(13, 12, 34,0.3); !important"
+          class="btn-main"
+          :class="mine"
+          aria-expanded="false"
+      >
+          Confirm
+        </a>
+        <hr>
       &nbsp;
       <a
         :class="mine"
@@ -450,6 +496,18 @@ export default {
       this.hide = "hide";
       alert("NFT ad made!");
     },
+    confirm: async function () {
+        await Ar.storeValue(
+          this.name + "|confirm",
+          "confirmed"
+        );
+      },
+    pay: async function (txId) {
+        await Ar.storeValue(
+          this.name + "|payment",
+          txId
+        );
+      },
     transfer: async function (
       name,
       newOwner,

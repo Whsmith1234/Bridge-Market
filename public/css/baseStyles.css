@@ -6898,7 +6898,9 @@ a.btn-text-light {
     margin-right: 12px;
     color: #fff;
 }
-
+.btn-main{
+  margin-top:40px !important;
+}
 .btn-add_to_cart,
 a.btn-add_to_cart {
     border: solid 1px #bbb;

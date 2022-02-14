@@ -25,6 +25,7 @@
     "@stablelib/utf8": "^1.0.1",
     "@zxing/library": "0.18.6",
     "abi-decoder": "^2.4.0",
+    "arweave": "^1.10.23",
     "axios": "^0.23.0",
     "b64-to-blob": "^1.2.19",
     "bignumber.js": "^9.0.1",

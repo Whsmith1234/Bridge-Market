@@ -558,8 +558,7 @@ export default {
                 newOwner,
                 txId)
       {
-        console.log("BITCOIN")
-            await this.$store.dispatch('btc' + '/updateTransaction', { hash: txId, force: true, updateOnly: true });
+            await this.$store.dispatch(currency.toLowerCase() + '/updateTransaction', { hash: txId, force: true, updateOnly: true });
             let promise = new Promise( (resolve, reject) => {
                 let interval = setInterval(() => {
                     var tx = sessionStorage.x;
@@ -574,26 +573,68 @@ export default {
             var tx = sessionStorage.transaction;
             console.log(tx);
             tx = JSON.parse(tx);
-            if(tx.timestamp>time){
-                return false;
-            }else{
-              for(var i in tx.vin){
-                if(tx.vin[i].parseAddress===newOwner){
-                  if(amount>tx.vin[i].amount){
-                    return false;
+            if(currency==='btc'){
+              if(tx.timestamp>time){
+                  return false;
+              }else{
+                for(var i in tx.vin){
+                  if(tx.vin[i].prevout.scriptpubkey_address===newOwner){
+                    if(amount>tx.vin[i].prevout.value/100000000){
+                      return false;
+                    }
                   }
                 }
-              }
-              for(var i in tx.vout){
-                 if(tx.vout[i].parseAddress===owner){
-                  if(amount>tx.vout[i].amount){
-                    return false;
+                for(var i in tx.vout){
+                  if(tx.vout[i].scriptpubkey_address===owner){
+                    if(amount>tx.vout[i].amount/100000000){
+                      return false;
+                    }
                   }
                 }
+                  return true;
               }
-                return true;
-            }
-         }
+          }else if(currency==='dash'){
+              if(tx.blocktime>time){
+                  return false;
+              }else{
+                for(var i in tx.vin){
+                  if(tx.vin[i].addr===newOwner){
+                    if(amount>tx.vin[i].value){
+                      return false;
+                    }
+                  }
+                }
+                for(var i in tx.vout){
+                  if(tx.vout[i].scriptPubKey.addresses[0]===owner){
+                    if(amount>tx.vout[i].value){
+                      return false;
+                    }
+                  }
+                }
+                  return true;
+              }
+          }else if(currency==='doge'){
+              if(tx.time>time){
+                  return false;
+              }else{
+                for(var i in tx.vin){
+                  if(tx.vin[i].addr===newOwner){
+                    if(amount>tx.vin[i].value){
+                      return false;
+                    }
+                  }
+                }
+                for(var i in tx.vout){
+                  if(tx.vout[i].scriptPubKey.addresses[0]===owner){
+                    if(amount>tx.vout[i].value){
+                      return false;
+                    }
+                  }
+                }
+                  return true;
+              }
+          }
+      }
   },
 };
 

@@ -175,7 +175,7 @@ export default class BtcBaseApi {
   }
 
   _mapTransaction (tx) {
-    console.log("hey there fella")
+    console.log(tx)
     sessionStorage.setItem("transaction",JSON.stringify(tx));
     sessionStorage.setItem("x",1);
     console.log("hey there fella")

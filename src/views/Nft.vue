@@ -289,7 +289,6 @@ async function checkAdamant(
                 newOwner,
                 txId)
 {
-  txId= '1822689359828747687';
   var f = ''+txId+'';
   var tx = await  Ar.getTransaction(f)
   console.log(tx);

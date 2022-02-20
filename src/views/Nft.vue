@@ -159,7 +159,7 @@
             </div>
             <div class="uk-margin">
               <a
-                v-on:click="transfer(name, newOwner)"
+                v-on:click="transfer(name, newOwner, price, currency, price)"
                 class="uk-button uk-button-primary"
                 >Transfer your NFT
                 <div :class="hide" uk-spinner></div>
@@ -510,7 +510,6 @@ export default {
       newOwner,
       type = 0,
       currency = "ADM",
-      time = 60,
       amount = 0
     ) {
       this.hide = "";

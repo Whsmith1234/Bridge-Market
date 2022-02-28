@@ -385,10 +385,10 @@ export default {
             transfers[0].height+1
           );
             var from = transfers[0].senderId;
-            var paymentTo = transfer[5];
-            var paymentFrom = trasfer[4];
-            var currency = transfer[2];
-            var amount = transfer[3];
+            var paymentTo = transfer[4];
+            var paymentFrom = transfer[3];
+            var currency = transfer[1];
+            var amount = transfer[2];
             var time = transfers[0].block_timestamp+3600;
             if(Date.now()/1000<transfers[0].block_timestamp+3600+EPOCH){
               var confirmation = await Ar.getStored(
@@ -400,18 +400,19 @@ export default {
                 transfers[0].height+1
               );
               if(confirmation.length>0){
-                this.transfers.push("Transfered to " + transfers[0].asset.state.value+" For "+amount+" "+currency);
+                this.transfers.push("Transfered to " + transfer[0] +" For "+amount+" "+currency);
                       transfers = await Ar.getStored(
                         nft + "|",
-                        transfers[0].asset.state.value,
+                        transfer[0],
                         10,
                         "asc",
                         0,
                         transfers[0].height+1
                       );
-                  currentOwner =  transfers[0].asset.state.value;
+                  currentOwner =  transfer[0];
               }else{
               this.transfers.push("This NFT is currently being transferred sorry. If you are yet to pay submit a payment reciept. If you are the owner speed up the process by confirming.");
+              break;
               }
             }
             else{
@@ -434,17 +435,17 @@ export default {
                   }else if(currency.toLowerCase()=='adm'){
                     t = await checkAdamant(amount,time,from,transfer[0],txid[0].state.value)
                   }
-                  if(f){
+                  if(t){
                     this.transfers.push("Transfered to " + transfers[0].asset.state.value+" For "+amount+" "+currency);
                       transfers = await Ar.getStored(
                         nft + "|",
-                        transfers[0].asset.state.value,
+                        transfers[0].asset.state.value.split('|')[0],
                         10,
                         "asc",
                         0,
                         transfers[0].height+1
                       );
-                  currentOwner =  transfers[0].asset.state.value;
+                  currentOwner =  transfers[0].asset.state.value.split('|')[0];
                   }
               }
             }else{
@@ -461,7 +462,6 @@ export default {
           }
         }
     }
-
     this.hide = "hide";
     if (ownerCheck === currentOwner) {
       this.transfers.push("Verification complete this is the correct owner");
@@ -507,6 +507,14 @@ export default {
       alert("NFT ad made!");
     },
     confirm: async function () {
+      if (confirm("Are you sure they paid?") == true) {
+        await Ar.storeValue(
+                this.name + "|confirm",
+                "confirmed"
+              );
+      } else {
+        alert('Confirm cancelled')
+      }
         await Ar.storeValue(
           this.name + "|confirm",
           "confirmed"

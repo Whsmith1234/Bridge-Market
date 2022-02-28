@@ -282,6 +282,16 @@ import { hexToBytes, bytesToHex } from "@/lib/hex";
 import * as Ar from "@/lib/adamant-api.js";
 import { EPOCH } from "@/lib/constants.js";
 import BridgeNav from "@/components/BridgeNav.vue";
+import Arweave from 'arweave';
+// Or manually specify a host
+const arweave = Arweave.init({
+    host: 'arweave.net',// Hostname or IP address for a Arweave host
+    port: 443,          // Port
+    protocol: 'https',  // Network protocol http or https
+    timeout: 20000,     // Network request timeouts in milliseconds
+    logging: false,     // Enable network request logging
+});
+
 async function checkAdamant(
                 amount,
                 time,
@@ -310,6 +320,7 @@ export default {
     name: "",
     url: "",
     orig: "",
+    txId: "",
     transfers: [],
     bids: [],
     price: 0,
@@ -321,7 +332,9 @@ export default {
   }),
   async mounted() {
     this.hide = "";
-
+    var blockheight = await arweave.transactions.get('hKMMPNh_emBf8v_at1tFzNYACisyMQNcKzeeE1QE9p8');
+    var f = await arweave.transactions.getStatus('bNbA3TEQVL60xlgCcqdz4ZPHFZ711cZ3hmkpGttDt_U')
+    console.log(blockheight, f);
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const nft = urlParams.get("name");
@@ -498,12 +511,14 @@ export default {
           this.name + "|confirm",
           "confirmed"
         );
+        alert('Cofirmed!')
       },
     pay: async function (txId) {
         await Ar.storeValue(
           this.name + "|payment",
           txId
         );
+        alert('Payment pushed')
       },
     transfer: async function (
       name,
@@ -517,6 +532,24 @@ export default {
       if (type == 0) {
         await Ar.storeValue(name + "|", newOwner);
       } else {
+        if(currency === "Arweave"){
+          var blockheight =  await arweave.blocks.getCurrent(); 
+          console.log(blockheight);
+          await Ar.storeValue(
+            name + "|",
+            newOwner +
+              "|" +
+              currency +
+              "|" +
+              amount +
+              "|" +
+              this.fromAddress +
+              "|" +
+              this.toAddress +
+              "|"+
+              blockheight
+        );
+        }else{
         await Ar.storeValue(
           name + "|",
           newOwner +
@@ -529,7 +562,9 @@ export default {
             "|" +
             this.toAddress
         );
+        }
       }
+      alert('Transfer pushed')
       this.hide = "hide";
     },
     bid: async function (amount, currency) {
@@ -547,6 +582,7 @@ export default {
       });
       console.log(h);
       console.log(this.currentOwner);
+      alert('Pushed bid')
     },
     inputBid: async function (bid) {
       this.price = bid[2];

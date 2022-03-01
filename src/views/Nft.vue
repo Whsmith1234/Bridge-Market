@@ -33,12 +33,11 @@
         </form>
       </div>
     </div>
-     <div id="payment" uk-modal="" class="uk-modal" style="" tabindex="0">
+    <div id="payment" uk-modal="" class="uk-modal" style="" tabindex="0">
       <div class="uk-modal-dialog uk-modal-body">
         <h2 class="uk-modal-title">Add Payment txId</h2>
         <form>
           <fieldset class="uk-fieldset">
-           
             <div class="uk-margin">
               <input
                 v-model="txId"
@@ -48,9 +47,7 @@
               />
             </div>
             <div class="uk-margin">
-              <a
-                v-on:click="pay(txId)"
-                class="uk-button uk-button-primary"
+              <a v-on:click="pay(txId)" class="uk-button uk-button-primary"
                 >Pay
                 <div :class="hide" uk-spinner></div>
               </a>
@@ -207,25 +204,21 @@
       >
         Post Ad
       </a>
-      <hr>
-      <a
-        class="btn-main"
-        uk-toggle="target: #payment"
-        aria-expanded="false"
-      >
+      <hr />
+      <a class="btn-main" uk-toggle="target: #payment" aria-expanded="false">
         Input Payment Receipt
       </a>
       &nbsp;
       <a
-          v-on:click="confirm()"
-          style="margin-top:100px; background-color: rgb(13, 12, 34,0.3); !important"
-          class="btn-main"
-          :class="mine"
-          aria-expanded="false"
+        v-on:click="confirm()"
+        style="margin-top:100px; background-color: rgb(13, 12, 34,0.3); !important"
+        class="btn-main"
+        :class="mine"
+        aria-expanded="false"
       >
-          Confirm
-        </a>
-        <hr>
+        Confirm
+      </a>
+      <hr />
       <a
         :class="mine"
         style="background-color: rgb(13, 12, 34,0.3); !important"
@@ -282,35 +275,33 @@ import { hexToBytes, bytesToHex } from "@/lib/hex";
 import * as Ar from "@/lib/adamant-api.js";
 import { EPOCH } from "@/lib/constants.js";
 import BridgeNav from "@/components/BridgeNav.vue";
-import Arweave from 'arweave';
+import Arweave from "arweave";
 // Or manually specify a host
 const arweave = Arweave.init({
-    host: 'arweave.net',// Hostname or IP address for a Arweave host
-    port: 443,          // Port
-    protocol: 'https',  // Network protocol http or https
-    timeout: 20000,     // Network request timeouts in milliseconds
-    logging: false,     // Enable network request logging
+  host: "arweave.net", // Hostname or IP address for a Arweave host
+  port: 443, // Port
+  protocol: "https", // Network protocol http or https
+  timeout: 20000, // Network request timeouts in milliseconds
+  logging: false, // Enable network request logging
 });
 
-async function checkAdamant(
-                amount,
-                time,
-                owner,
-                newOwner,
-                txId)
-{
-  var f = ''+txId+'';
-  var tx = await  Ar.getTransaction(f)
+async function checkAdamant(amount, time, owner, newOwner, txId) {
+  var f = "" + txId + "";
+  var tx = await Ar.getTransaction(f);
   console.log(tx);
-  var am = amount*100000000;
-  if(tx.block_timestamp>time||tx.amount<am||tx.senderId!=newOwner||tx.recipientId!=owner){
+  var am = amount * 100000000;
+  if (
+    tx.block_timestamp > time ||
+    tx.amount < am ||
+    tx.senderId != newOwner ||
+    tx.recipientId != owner
+  ) {
     return false;
-  }else{
+  } else {
     return true;
   }
 }
-sessionStorage.setItem("x",0);
-
+sessionStorage.setItem("x", 0);
 
 export default {
   components: { BridgeNav },
@@ -332,8 +323,12 @@ export default {
   }),
   async mounted() {
     this.hide = "";
-    var blockheight = await arweave.transactions.get('hKMMPNh_emBf8v_at1tFzNYACisyMQNcKzeeE1QE9p8');
-    var f = await arweave.transactions.getStatus('bNbA3TEQVL60xlgCcqdz4ZPHFZ711cZ3hmkpGttDt_U')
+    var blockheight = await arweave.transactions.get(
+      "hKMMPNh_emBf8v_at1tFzNYACisyMQNcKzeeE1QE9p8"
+    );
+    var f = await arweave.transactions.getStatus(
+      "bNbA3TEQVL60xlgCcqdz4ZPHFZ711cZ3hmkpGttDt_U"
+    );
     console.log(blockheight, f);
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -371,96 +366,135 @@ export default {
           10,
           "asc",
           0,
-          transfers[0].height+1
+          transfers[0].height + 1
         );
-        currentOwner =  transfers[0].asset.state.value;
+        currentOwner = transfers[0].asset.state.value;
       } else {
-          if (transfer.length > 1) {
-            var txid = await Ar.getStored(
+        if (transfer.length > 1) {
+          var txid = await Ar.getStored(
             nft + "|payment",
             transfer[0],
             1,
             "asc",
             2,
-            transfers[0].height+1
+            transfers[0].height + 1
           );
-            var from = transfers[0].senderId;
-            var paymentTo = transfer[4];
-            var paymentFrom = transfer[3];
-            var currency = transfer[1];
-            var amount = transfer[2];
-            var time = transfers[0].block_timestamp+3600;
-            if(Date.now()/1000<transfers[0].block_timestamp+3600+EPOCH){
-              var confirmation = await Ar.getStored(
-                nft + "|confirm",
-                transfers[0].senderId,
+          var from = transfers[0].senderId;
+          var paymentTo = transfer[4];
+          var paymentFrom = transfer[3];
+          var currency = transfer[1];
+          var amount = transfer[2];
+          var time = transfers[0].block_timestamp + 3600;
+          if (Date.now() / 1000 < transfers[0].block_timestamp + 3600 + EPOCH) {
+            var confirmation = await Ar.getStored(
+              nft + "|confirm",
+              transfers[0].senderId,
+              10,
+              "asc",
+              0,
+              transfers[0].height + 1
+            );
+            if (confirmation.length > 0) {
+              this.transfers.push(
+                "Transfered to " +
+                  transfer[0] +
+                  " For " +
+                  amount +
+                  " " +
+                  currency
+              );
+              transfers = await Ar.getStored(
+                nft + "|",
+                transfer[0],
                 10,
                 "asc",
                 0,
-                transfers[0].height+1
+                transfers[0].height + 1
               );
-              if(confirmation.length>0){
-                this.transfers.push("Transfered to " + transfer[0] +" For "+amount+" "+currency);
-                      transfers = await Ar.getStored(
-                        nft + "|",
-                        transfer[0],
-                        10,
-                        "asc",
-                        0,
-                        transfers[0].height+1
-                      );
-                  currentOwner =  transfer[0];
-              }else{
-              this.transfers.push("This NFT is currently being transferred sorry. If you are yet to pay submit a payment reciept. If you are the owner speed up the process by confirming.");
+              currentOwner = transfer[0];
+            } else {
+              this.transfers.push(
+                "This NFT is currently being transferred sorry. If you are yet to pay submit a payment reciept. If you are the owner speed up the process by confirming."
+              );
               break;
-              }
             }
-            else{
-              if(txid.length>0){
-                if(txid[0].block_timestamp>time){
-                  transfers = await Ar.getStored(
+          } else {
+            if (txid.length > 0) {
+              if (txid[0].block_timestamp > time) {
+                transfers = await Ar.getStored(
                   nft + "|",
                   transfers[0].senderId,
                   10,
                   "asc",
                   0,
-                  transfers[0].height+1
+                  transfers[0].height + 1
                 );
-                }else{
-                  var t =false;
-                  if(currency.toLowerCase()==='eth'){
-                    t = await this.checkEth('eth',amount,time+EPOCH-3600,paymentTo,paymentFrom,txid[0].state.value)
-                  }else if(currency.toLowerCase()==='btc'||currency.toLowerCase()==='dash'||currency.toLowerCase()==='doge'){
-                    t = await this.checkBitcoin(currency.toLowerCase(),amount,time+EPOCH-3600,paymentTo,paymentFrom,txid[0].state.value)
-                  }else if(currency.toLowerCase()=='adm'){
-                    t = await checkAdamant(amount,time,from,transfer[0],txid[0].state.value)
-                  }
-                  if(t){
-                    this.transfers.push("Transfered to " + transfers[0].asset.state.value+" For "+amount+" "+currency);
-                      transfers = await Ar.getStored(
-                        nft + "|",
-                        transfers[0].asset.state.value.split('|')[0],
-                        10,
-                        "asc",
-                        0,
-                        transfers[0].height+1
-                      );
-                  currentOwner =  transfers[0].asset.state.value.split('|')[0];
-                  }
+              } else {
+                var t = false;
+                if (currency.toLowerCase() === "eth") {
+                  t = await this.checkEth(
+                    "eth",
+                    amount,
+                    time + EPOCH - 3600,
+                    paymentTo,
+                    paymentFrom,
+                    txid[0].state.value
+                  );
+                } else if (
+                  currency.toLowerCase() === "btc" ||
+                  currency.toLowerCase() === "dash" ||
+                  currency.toLowerCase() === "doge"
+                ) {
+                  t = await this.checkBitcoin(
+                    currency.toLowerCase(),
+                    amount,
+                    time + EPOCH - 3600,
+                    paymentTo,
+                    paymentFrom,
+                    txid[0].state.value
+                  );
+                } else if (currency.toLowerCase() == "adm") {
+                  t = await checkAdamant(
+                    amount,
+                    time,
+                    from,
+                    transfer[0],
+                    txid[0].state.value
+                  );
+                }
+                if (t) {
+                  this.transfers.push(
+                    "Transfered to " +
+                      transfers[0].asset.state.value +
+                      " For " +
+                      amount +
+                      " " +
+                      currency
+                  );
+                  transfers = await Ar.getStored(
+                    nft + "|",
+                    transfers[0].asset.state.value.split("|")[0],
+                    10,
+                    "asc",
+                    0,
+                    transfers[0].height + 1
+                  );
+                  currentOwner = transfers[0].asset.state.value.split("|")[0];
+                }
               }
-            }else{
+            } else {
               transfers = await Ar.getStored(
                 nft + "|",
                 transfers[0].senderId,
                 10,
                 "asc",
                 0,
-                transfers[0].height+1
+                transfers[0].height + 1
               );
-            }
             }
           }
         }
+      }
     }
     this.hide = "hide";
     if (ownerCheck === currentOwner) {
@@ -508,26 +542,17 @@ export default {
     },
     confirm: async function () {
       if (confirm("Are you sure they paid?") == true) {
-        await Ar.storeValue(
-                this.name + "|confirm",
-                "confirmed"
-              );
+        await Ar.storeValue(this.name + "|confirm", "confirmed");
       } else {
-        alert('Confirm cancelled')
+        alert("Confirm cancelled");
       }
-        await Ar.storeValue(
-          this.name + "|confirm",
-          "confirmed"
-        );
-        alert('Cofirmed!')
-      },
+      await Ar.storeValue(this.name + "|confirm", "confirmed");
+      alert("Cofirmed!");
+    },
     pay: async function (txId) {
-        await Ar.storeValue(
-          this.name + "|payment",
-          txId
-        );
-        alert('Payment pushed')
-      },
+      await Ar.storeValue(this.name + "|payment", txId);
+      alert("Payment pushed");
+    },
     transfer: async function (
       name,
       newOwner,
@@ -540,8 +565,8 @@ export default {
       if (type == 0) {
         await Ar.storeValue(name + "|", newOwner);
       } else {
-        if(currency === "Arweave"){
-          var blockheight =  await arweave.blocks.getCurrent(); 
+        if (currency === "Arweave") {
+          var blockheight = await arweave.blocks.getCurrent();
           console.log(blockheight);
           await Ar.storeValue(
             name + "|",
@@ -554,25 +579,25 @@ export default {
               this.fromAddress +
               "|" +
               this.toAddress +
-              "|"+
+              "|" +
               blockheight
-        );
-        }else{
-        await Ar.storeValue(
-          name + "|",
-          newOwner +
-            "|" +
-            currency +
-            "|" +
-            amount +
-            "|" +
-            this.fromAddress +
-            "|" +
-            this.toAddress
-        );
+          );
+        } else {
+          await Ar.storeValue(
+            name + "|",
+            newOwner +
+              "|" +
+              currency +
+              "|" +
+              amount +
+              "|" +
+              this.fromAddress +
+              "|" +
+              this.toAddress
+          );
         }
       }
-      alert('Transfer pushed')
+      alert("Transfer pushed");
       this.hide = "hide";
     },
     bid: async function (amount, currency) {
@@ -590,7 +615,7 @@ export default {
       });
       console.log(h);
       console.log(this.currentOwner);
-      alert('Pushed bid')
+      alert("Pushed bid");
     },
     inputBid: async function (bid) {
       this.price = bid[2];
@@ -622,142 +647,146 @@ export default {
         "desc"
       );
     },
-    checkEth: async function(
-                currency,
-                amount,
-                time,
-                owner,
-                newOwner,
-                txId)
-      {
-            await this.$store.dispatch('eth' + '/updateTransaction', { hash: txId, force: true, updateOnly: true });
-            let promise = new Promise( (resolve, reject) => {
-                let interval = setInterval(() => {
-                    var tx = sessionStorage.x;
-                    console.log(tx)
-                    if (tx > 0) {
-                        sessionStorage.setItem("x",0)
-                        clearInterval(interval);
-                        resolve()
-                    }
-                }, 100)
-            });
-            await promise;
-            var tx = sessionStorage.transaction;
-            tx = JSON.parse(tx);
-            console.log(tx);
-            if(tx.timestamp>time||tx.amount<amount||tx.senderId!=newOwner||tx.recipientId!=owner){
-                return false;
-            }else{
-                return true;
-            }
-         },
-    checkBitcoin: async function(
-                currency,
-                amount,
-                time,
-                owner,
-                newOwner,
-                txId)
-      {
-            await this.$store.dispatch(currency.toLowerCase() + '/updateTransaction', { hash: txId, force: true, updateOnly: true });
-            let promise = new Promise( (resolve, reject) => {
-                let interval = setInterval(() => {
-                    var tx = sessionStorage.x;
-                    console.log(tx)
-                    if (tx > 0) {
-                        clearInterval(interval);
-                        resolve()
-                    }
-                }, 100)
-            });
-            await promise;
-            var tx = sessionStorage.transaction;
-            console.log(tx);
-            tx = JSON.parse(tx);
-            if(currency==='btc'){
-              var t =0;
-              if(tx.timestamp>time){
-                  return false;
-              }else{
-                for(var i in tx.vin){
-                  if(tx.vin[i].prevout.scriptpubkey_address===newOwner){
-                    t++;
-                    if(amount>tx.vin[i].prevout.value/100000000){
-                      return false;
-                    }
-                  }
-                }
-                for(var i in tx.vout){
-                  if(tx.vout[i].scriptpubkey_address===owner){
-                    t++;
-                    if(amount>tx.vout[i].amount/100000000){
-                      return false;
-                    }
-                  }
-                }
-                if(t>1){
-                  return true;
-                }else{
-                  return false;
-                }
-                  
-              }
-          }else if(currency==='dash'){
-            var t =0;
-              if(tx.blocktime>time){
-                  return false;
-              }else{
-                for(var i in tx.vin){
-                  if(tx.vin[i].addr===newOwner){
-                    t++;
-                    if(amount>tx.vin[i].value){
-                      return false;
-                    }
-                  }
-                }
-                for(var i in tx.vout){
-                  if(tx.vout[i].scriptPubKey.addresses[0]===owner){
-                    t++;
-                    if(amount>tx.vout[i].value){
-                      return false;
-                    }
-                  }
-                }
-                 if(t>1){
-                    return true;
-                 }else{
-                   return false;
-                 }
-              }
-          }else if(currency==='doge'){
-              if(tx.time>time){
-                  return false;
-              }else{
-                for(var i in tx.vin){
-                  if(tx.vin[i].addr===newOwner){
-                    t++;
-                    if(amount>tx.vin[i].value){
-                      return false;
-                    }
-                  }
-                }
-                for(var i in tx.vout){
-                  if(tx.vout[i].scriptPubKey.addresses[0]===owner){
-                    t++;
-                    if(amount>tx.vout[i].value){
-                      return false;
-                    }
-                  }
-                }
-                if(t>1){
-                  return true;
-                }else{
-                  return false;
-                }
-              }
+    checkEth: async function (currency, amount, time, owner, newOwner, txId) {
+      await this.$store.dispatch("eth" + "/updateTransaction", {
+        hash: txId,
+        force: true,
+        updateOnly: true,
+      });
+      let promise = new Promise((resolve, reject) => {
+        let interval = setInterval(() => {
+          var tx = sessionStorage.x;
+          console.log(tx);
+          if (tx > 0) {
+            sessionStorage.setItem("x", 0);
+            clearInterval(interval);
+            resolve();
           }
+        }, 100);
+      });
+      await promise;
+      var tx = sessionStorage.transaction;
+      tx = JSON.parse(tx);
+      console.log(tx);
+      if (
+        tx.timestamp > time ||
+        tx.amount < amount ||
+        tx.senderId != newOwner ||
+        tx.recipientId != owner
+      ) {
+        return false;
+      } else {
+        return true;
       }
+    },
+    checkBitcoin: async function (
+      currency,
+      amount,
+      time,
+      owner,
+      newOwner,
+      txId
+    ) {
+      await this.$store.dispatch(
+        currency.toLowerCase() + "/updateTransaction",
+        { hash: txId, force: true, updateOnly: true }
+      );
+      let promise = new Promise((resolve, reject) => {
+        let interval = setInterval(() => {
+          var tx = sessionStorage.x;
+          console.log(tx);
+          if (tx > 0) {
+            clearInterval(interval);
+            resolve();
+          }
+        }, 100);
+      });
+      await promise;
+      var tx = sessionStorage.transaction;
+      console.log(tx);
+      tx = JSON.parse(tx);
+      if (currency === "btc") {
+        var t = 0;
+        if (tx.timestamp > time) {
+          return false;
+        } else {
+          for (var i in tx.vin) {
+            if (tx.vin[i].prevout.scriptpubkey_address === newOwner) {
+              t++;
+              if (amount > tx.vin[i].prevout.value / 100000000) {
+                return false;
+              }
+            }
+          }
+          for (var i in tx.vout) {
+            if (tx.vout[i].scriptpubkey_address === owner) {
+              t++;
+              if (amount > tx.vout[i].amount / 100000000) {
+                return false;
+              }
+            }
+          }
+          if (t > 1) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      } else if (currency === "dash") {
+        var t = 0;
+        if (tx.blocktime > time) {
+          return false;
+        } else {
+          for (var i in tx.vin) {
+            if (tx.vin[i].addr === newOwner) {
+              t++;
+              if (amount > tx.vin[i].value) {
+                return false;
+              }
+            }
+          }
+          for (var i in tx.vout) {
+            if (tx.vout[i].scriptPubKey.addresses[0] === owner) {
+              t++;
+              if (amount > tx.vout[i].value) {
+                return false;
+              }
+            }
+          }
+          if (t > 1) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      } else if (currency === "doge") {
+        if (tx.time > time) {
+          return false;
+        } else {
+          for (var i in tx.vin) {
+            if (tx.vin[i].addr === newOwner) {
+              t++;
+              if (amount > tx.vin[i].value) {
+                return false;
+              }
+            }
+          }
+          for (var i in tx.vout) {
+            if (tx.vout[i].scriptPubKey.addresses[0] === owner) {
+              t++;
+              if (amount > tx.vout[i].value) {
+                return false;
+              }
+            }
+          }
+          if (t > 1) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      }
+    },
   },
 };
 

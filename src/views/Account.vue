@@ -265,138 +265,146 @@
             </div>
           </div>
         </section>
-        
+
         <section
           id="section-intro"
           class="no-top no-bottom"
           style="background-size: cover"
-        ><a href="/mint" style="color:black;">
-          <div class="container" style="background-size: cover">
-            <div class="row" style="background-size: cover">
-              <div
-                class="col-lg-4 col-md-6 mb-sm-30"
-                style="background-size: cover"
-              >
+        >
+          <a href="/mint" style="color: black">
+            <div class="container" style="background-size: cover">
+              <div class="row" style="background-size: cover">
                 <div
-                  class="feature-box f-boxed style-3"
+                  class="col-lg-4 col-md-6 mb-sm-30"
                   style="background-size: cover"
                 >
-                  <i
-                    class="wow fadeInUp bg-color-2 i-boxed icon_wallet animated"
-                    style="visibility: visible; animation-name: fadeInUp"
-                  ></i>
-                  <div class="text" style="background-size: cover">
-                    <h4
-                      class="wow fadeInUp animated"
-                      style="visibility: visible; animation-name: fadeInUp"
-                    >
-                      Sign Up&nbsp;
-                    </h4>
-                    <p
-                      class="wow fadeInUp animated"
-                      data-wow-delay=".25s"
-                      style="
-                        visibility: visible;
-                        animation-delay: 0.25s;
-                        animation-name: fadeInUp;
+                  <div
+                    class="feature-box f-boxed style-3"
+                    style="background-size: cover"
+                  >
+                    <i
+                      class="
+                        wow
+                        fadeInUp
+                        bg-color-2
+                        i-boxed
+                        icon_wallet
+                        animated
                       "
-                    >
-                      Setting up your wallet is as easy as 1.. 2.. Not even
-                      three. Click on the Sign Up button and use the passphrase
-                      given to you by the system.
-                    </p>
+                      style="visibility: visible; animation-name: fadeInUp"
+                    ></i>
+                    <div class="text" style="background-size: cover">
+                      <h4
+                        class="wow fadeInUp animated"
+                        style="visibility: visible; animation-name: fadeInUp"
+                      >
+                        Sign Up&nbsp;
+                      </h4>
+                      <p
+                        class="wow fadeInUp animated"
+                        data-wow-delay=".25s"
+                        style="
+                          visibility: visible;
+                          animation-delay: 0.25s;
+                          animation-name: fadeInUp;
+                        "
+                      >
+                        Setting up your wallet is as easy as 1.. 2.. Not even
+                        three. Click on the Sign Up button and use the
+                        passphrase given to you by the system.
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div
-                class="col-lg-4 col-md-6 mb-sm-30"
-                style="background-size: cover"
-              >
                 <div
-                  class="feature-box f-boxed style-3"
+                  class="col-lg-4 col-md-6 mb-sm-30"
                   style="background-size: cover"
                 >
-                  <i
-                    class="
-                      wow
-                      fadeInUp
-                      bg-color-2
-                      i-boxed
-                      icon_cloud-upload_alt
-                      animated
-                    "
-                    style="visibility: visible; animation-name: fadeInUp"
-                  ></i>
-                  <div class="text" style="background-size: cover">
-                    <h4
-                      class="wow fadeInUp animated"
-                      style="visibility: visible; animation-name: fadeInUp"
-                    >
-                      Add your NFT's
-                    </h4>
-                    <p
-                      class="wow fadeInUp animated"
-                      data-wow-delay=".25s"
-                      style="
-                        visibility: visible;
-                        animation-delay: 0.25s;
-                        animation-name: fadeInUp;
+                  <div
+                    class="feature-box f-boxed style-3"
+                    style="background-size: cover"
+                  >
+                    <i
+                      class="
+                        wow
+                        fadeInUp
+                        bg-color-2
+                        i-boxed
+                        icon_cloud-upload_alt
+                        animated
                       "
-                    >
-                      Add and make your NFTs. Bridging your NFTs from certain
-                      platforms takes some time and will require you email us at
-                      rgdev@pm.me.&nbsp;
-                    </p>
+                      style="visibility: visible; animation-name: fadeInUp"
+                    ></i>
+                    <div class="text" style="background-size: cover">
+                      <h4
+                        class="wow fadeInUp animated"
+                        style="visibility: visible; animation-name: fadeInUp"
+                      >
+                        Add your NFT's
+                      </h4>
+                      <p
+                        class="wow fadeInUp animated"
+                        data-wow-delay=".25s"
+                        style="
+                          visibility: visible;
+                          animation-delay: 0.25s;
+                          animation-name: fadeInUp;
+                        "
+                      >
+                        Add and make your NFTs. Bridging your NFTs from certain
+                        platforms takes some time and will require you email us
+                        at rgdev@pm.me.&nbsp;
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div
-                class="col-lg-4 col-md-6 mb-sm-30"
-                style="background-size: cover"
-              >
                 <div
-                  class="feature-box f-boxed style-3"
+                  class="col-lg-4 col-md-6 mb-sm-30"
                   style="background-size: cover"
                 >
-                  <i
-                    class="
-                      wow
-                      fadeInUp
-                      bg-color-2
-                      i-boxed
-                      icon_tags_alt
-                      animated animated
-                    "
-                    style="visibility: visible; animation-name: fadeInUp"
-                  ></i>
-                  <div class="text" style="background-size: cover">
-                    <h4
-                      class="wow fadeInUp animated animated"
-                      style="visibility: visible; animation-name: fadeInUp"
-                    >
-                      Sell your NFT's
-                    </h4>
-                    <p
-                      class="wow fadeInUp animated animated"
-                      data-wow-delay=".25s"
-                      style="
-                        visibility: visible;
-                        animation-delay: 0.25s;
-                        animation-name: fadeInUp;
+                  <div
+                    class="feature-box f-boxed style-3"
+                    style="background-size: cover"
+                  >
+                    <i
+                      class="
+                        wow
+                        fadeInUp
+                        bg-color-2
+                        i-boxed
+                        icon_tags_alt
+                        animated animated
                       "
-                    >
-                      Sell your NFTs in multiple crypto-currencies at once.
-                      Simply place an add in the crypto you desire and you are
-                      good to go.
-                    </p>
+                      style="visibility: visible; animation-name: fadeInUp"
+                    ></i>
+                    <div class="text" style="background-size: cover">
+                      <h4
+                        class="wow fadeInUp animated animated"
+                        style="visibility: visible; animation-name: fadeInUp"
+                      >
+                        Sell your NFT's
+                      </h4>
+                      <p
+                        class="wow fadeInUp animated animated"
+                        data-wow-delay=".25s"
+                        style="
+                          visibility: visible;
+                          animation-delay: 0.25s;
+                          animation-name: fadeInUp;
+                        "
+                      >
+                        Sell your NFTs in multiple crypto-currencies at once.
+                        Simply place an add in the crypto you desire and you are
+                        good to go.
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-           </a>
+          </a>
         </section>
-       
+
         <a
           href="https://github.com/Whsmith1234/Bridge-Market/blob/master/Environment.md"
         >
@@ -740,14 +748,10 @@
                   </li>
                   <li><a href="https://arweave.org">Partners</a></li>
                   <li>
-                    <a href="https://discord.gg/a5KSaNQzt"
-                      >Suggestions</a
-                    >
+                    <a href="https://discord.gg/a5KSaNQzt">Suggestions</a>
                   </li>
                   <li>
-                    <a href="https://discord.gg/a5KSaNQz"
-                      >Discord</a
-                    >
+                    <a href="https://discord.gg/a5KSaNQz">Discord</a>
                   </li>
                   <li>
                     <a href="https://github.com/Whsmith1234/Bridge-Market"
@@ -841,7 +845,6 @@
   </div>
 </template>
 <style>
-
 </style>
 <script>
 import * as Ar from "@/lib/adamant-api.js";

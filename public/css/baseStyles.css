@@ -15300,6 +15300,10 @@ border-color: rgba(255, 255, 255, .1);
     display: block;
 }
 
+.Premium{
+  background-color: #9db0cd !important;
+}
+
 .owl-arrow .next:before {
     content: '\f178';
 }

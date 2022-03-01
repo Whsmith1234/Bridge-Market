@@ -119,9 +119,9 @@
           style="transform: translateY(0px)"
         >
         
-          <div class="owl-item active" style="width: 100%; margin-right: 25px">
+          <div :class ="' owl-item active'" style="width: 100%; margin-right: 25px">
             <div class="d-item" style="display: block; background-size: cover">
-              <div class="nft__item" style="background-size: cover">
+              <div :class="Ad.premium + ' nft__item'" style="background-size: cover">
                 <div class="author_list_pp" style="background-size: cover">
                   <a
                     data-bs-toggle="tooltip"
@@ -173,7 +173,7 @@
                     Made By: {{ Ad.orig }}
                   </div>
                   <div class="nft__item_price" style="background-size: cover">
-                    {{ Ad.price }}
+                    {{ Ad.price }} | {{" "+Ad.premium}}
                   </div>
                   <div class="nft__item_action" style="background-size: cover">
                     <router-link
@@ -205,7 +205,6 @@
 <script>
 import { hexToBytes, bytesToHex } from '@/lib/hex'
 import * as Ar from "@/lib/adamant-api.js";
-import { EPOCH } from "@/lib/constants.js";
 import BridgeNav from "@/components/BridgeNav.vue";
 export default {
   components: { BridgeNav },
@@ -251,6 +250,11 @@ export default {
       } else {
         x.orig = v[2];
         x.url = v[3];
+      }
+      if(x.url.includes("arweave.net")){
+        x.premium = "Premium";
+      }else{
+        x.premium = "";
       }
       Adreserve.push(x);
     }

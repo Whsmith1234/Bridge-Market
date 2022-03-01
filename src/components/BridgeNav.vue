@@ -1,5 +1,25 @@
 <template>
+
   <div class="layout justify-center">
+    <div id="modal-full" class=" uk-modal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <button class="uk-modal-close-full" type="button" uk-close></button>
+        <div class = "uk-search uk-search-large">
+            <input v-model = "search" class="uk-search-input uk-text-center" type="search" placeholder="Search" autofocus>
+            <center>
+            <router-link
+                  :to="{
+                    path: 'asset',
+                    query: { name: search},
+                  }"
+                  class="uk-button"
+                  >Search</router-link
+                >
+                </center>
+              </div>
+              
+    </div>
+</div>
     <nav
       id="nav"
       class="uk-navbar uk-navbar-container"
@@ -43,13 +63,7 @@
       <div class="uk-navbar-right">
         <ul class="uk-navbar-nav">
           <li>
-            <router-link
-              :to="{
-                path: '/search',
-              }"
-            >
-              <span class="fa fa-search"></span>
-            </router-link>
+            <a class="uk-navbar-toggle" href="#modal-full" uk-search-icon uk-toggle></a>
           </li>
           <li>
             <router-link
@@ -74,6 +88,7 @@ export default {
     newOwner: "",
     price: "",
     url: "",
+    search:"",
   }),
 };
 </script>

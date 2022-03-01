@@ -107,6 +107,12 @@ export default {
       if (data.length === 0) {
         Ar.storeValue(name, url)
         alert('Your NFT has been minted!')
+        this.$router.push({
+                    path: 'asset',
+                    query: { name: name,
+                    orig: JSON.parse(sessionStorage.adm).address,
+                    owner: JSON.parse(sessionStorage.adm).address}
+                  })
       } else {
         alert('Name already taken sorry')
       }

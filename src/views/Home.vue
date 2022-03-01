@@ -3,8 +3,18 @@
   <div id="arweave" uk-modal="" class="uk-modal" style="" tabindex="0">
         <div class="uk-modal-dialog uk-modal-body">
           <h2 class="uk-modal-title">Your Arweave</h2>
+          <br> Address: {{arweaveAddress}}
+          <hr>
+          Amount: {{arweaveAmount}}
+          <br>
+          Transactions from this wallet
+          <div v-for="transaction in transactions" :key="transaction">
+        <hr />
+       <a :href="'https://viewblock.io/arweave/tx/'+ transaction.node.id"> {{ transaction.node.id }}</a>
+      </div>
+        <hr>
           <form>
-            <a href = "#" v-on:click="connectAr()">Connect to Arweave</a>
+            <a href = "#" v-on:click="connectAr()">Update Arweave</a>
           </form>
         </div>
     </div>
@@ -123,21 +133,6 @@ function scrollIntoView() {
     this.scrollOffset = scrollOffset;
   }
 }
-async function connect(){
-   var wt = await window.arweaveWallet.connect(["ACCESS_ADDRESS", "ACCESS_ALL_ADDRESSES", "SIGN_TRANSACTION", "ENCRYPT", "DECRYPT"], { name: "Super Cool App", logo: "https://verto.exchange/logo_dark.svg" });
-    wt = await window.arweaveWallet.getActiveAddress();
-    arweave.wallets.getBalance(wt).then((balance) => {
-      let winston = balance;
-     let ar = arweave.ar.winstonToAr(balance);
-
-     console.log(winston);
-      //125213858712
-
-    // this.arweaveAmount= ar;
-      //0.125213858712
-});
-    console.log(wt);
-}
 export default {
   components: {
     WalletCard,
@@ -146,7 +141,7 @@ export default {
   data: () => ({
     arweaveAddress: "",
     arweaveAmount: 0,
-
+    transactions: []
   }),
   computed: {
     className: () => "account-view",
@@ -182,13 +177,39 @@ export default {
     },
   },
   mounted: async function() {
-   
+    this.connectAr();
     this.$refs.vtabs.scrollIntoView = scrollIntoView;
   },
   methods: {
-    connectAr: async function(){
-      connect();
-      
+     connectAr: async function(){
+     var wt = await window.arweaveWallet.connect(["ACCESS_ADDRESS", "ACCESS_ALL_ADDRESSES", "SIGN_TRANSACTION", "ENCRYPT", "DECRYPT"], { name: "Bridge-Market", logo: "https://verto.exchange/logo_dark.svg" });
+     wt = await window.arweaveWallet.getActiveAddress();
+     var balance = await arweave.wallets.getBalance(wt)
+     let ar = arweave.ar.winstonToAr(balance)
+     ar = Number(ar)
+     console.log(ar);
+     this.arweaveAmount=ar.toFixed(5);
+     this.arweaveAddress=wt;
+     var transactions = await fetch('https://arweave.net/graphql', {
+        method: 'POST',
+        body: JSON.stringify({
+          query: `{
+            transactions(owners:["${wt}"]) {
+                edges {
+                    node {
+                        id
+                    }
+                }
+            }
+          }`
+        }),
+        headers: {
+            'content-type': 'application/json'
+        }
+      });
+      var transactions = await (transactions.json());
+      console.log(transactions)
+      this.transactions = transactions.data.transactions.edges;
     },
     goToTransactions(crypto) {
       this.$router.push({

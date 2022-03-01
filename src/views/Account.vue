@@ -848,7 +848,6 @@
 </style>
 <script>
 import * as Ar from "@/lib/adamant-api.js";
-import { EPOCH } from "@/lib/constants.js";
 import BridgeNav from "@/components/BridgeNav.vue";
 export default {
   components: { BridgeNav },

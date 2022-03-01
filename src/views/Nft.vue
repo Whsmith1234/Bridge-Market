@@ -323,13 +323,6 @@ export default {
   }),
   async mounted() {
     this.hide = "";
-    var blockheight = await arweave.transactions.get(
-      "hKMMPNh_emBf8v_at1tFzNYACisyMQNcKzeeE1QE9p8"
-    );
-    var f = await arweave.transactions.getStatus(
-      "bNbA3TEQVL60xlgCcqdz4ZPHFZ711cZ3hmkpGttDt_U"
-    );
-    console.log(blockheight, f);
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const nft = urlParams.get("name");
@@ -459,6 +452,15 @@ export default {
                     time,
                     from,
                     transfer[0],
+                    txid[0].state.value
+                  );
+                }
+                else if (currency.toLowerCase() == "arweave"){
+                  t = await checkArweave(
+                    amount,
+                    time + EPOCH - 3600,
+                    paymentTo,
+                    paymentFrom,
                     txid[0].state.value
                   );
                 }
@@ -647,6 +649,17 @@ export default {
         "desc"
       );
     },
+    checkArweave: async function(amount, time, owner, newOwner, txId){
+          var transaction = await arweave.transactions.get(
+            txId
+          );
+          var status = await arweave.transactions.getStatus(
+              txId
+          );
+          var t = await arweave.transaction.getBlock(status.confirmed.block_indep_hash);
+          var t = t.timestamp;
+          return (transaction.owner == newOwner && transaction.target == owner && t>time && arweave.ar.winstonToAr(transaction.quantity)== amount)
+    },
     checkEth: async function (currency, amount, time, owner, newOwner, txId) {
       await this.$store.dispatch("eth" + "/updateTransaction", {
         hash: txId,
@@ -669,7 +682,7 @@ export default {
       tx = JSON.parse(tx);
       console.log(tx);
       if (
-        tx.timestamp > time ||
+        tx.timestamp < time ||
         tx.amount < amount ||
         tx.senderId != newOwner ||
         tx.recipientId != owner
@@ -707,7 +720,7 @@ export default {
       tx = JSON.parse(tx);
       if (currency === "btc") {
         var t = 0;
-        if (tx.timestamp > time) {
+        if (tx.timestamp < time) {
           return false;
         } else {
           for (var i in tx.vin) {
@@ -734,7 +747,7 @@ export default {
         }
       } else if (currency === "dash") {
         var t = 0;
-        if (tx.blocktime > time) {
+        if (tx.blocktime < time) {
           return false;
         } else {
           for (var i in tx.vin) {
@@ -760,7 +773,7 @@ export default {
           }
         }
       } else if (currency === "doge") {
-        if (tx.time > time) {
+        if (tx.time < time) {
           return false;
         } else {
           for (var i in tx.vin) {

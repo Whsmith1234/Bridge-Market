@@ -28,7 +28,11 @@ Bids are messages sent to the current owner that are unencrypted in the form
 
 The owner can send a confirm message during the transfer of the NFT but if they do not the NFT will be transferred after an our if the amount of currency is confirmed from the [Address from] to the [Addsress to] after that hour.
 
+Premium NFTs are stored on Arweave to avoid people taking down the images after the NFT is minted using arweave js.
 
+Currently accepts
+
+Ethereum, Arweave, Bitcoin, Adamant, Dash and Doge transactions
 
 ## Arweave
 

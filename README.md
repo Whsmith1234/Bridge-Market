@@ -4,29 +4,29 @@ Bridge Market is hoping to build NFTs on the Adamant blockchain
 <hr>
 
 NFTs are minted as key value pairs on the Adamant network
-'''
+```
 [name]: [url]
-'''
+```
 
 
 They are transfered when the current owner pushes a transaction message to the network
 
 
-'''
+```
 [name]| : [newOwner]|[currency]|[amount]|[Address from]|[Adress to]
-'''
+```
 
 
 
 Bids are messages sent to the current owner that are unencrypted in the form
 
 
-'''
+```
 [name]@|[amount]|[currency]|[address]
-'''
+```
 
 
-The owner can send a confirm message during the transfer of the NFT but if they do not the NFT will be transferred after an our if the amount of currency is confirmed from the [Adress from] to the [Adsress to] after that hour.
+The owner can send a confirm message during the transfer of the NFT but if they do not the NFT will be transferred after an our if the amount of currency is confirmed from the [Address from] to the [Addsress to] after that hour.
 
 
 
